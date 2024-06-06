@@ -1,0 +1,138 @@
+package com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels
+
+import androidx.lifecycle.LiveData
+import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
+import com.mehmetBaloglu.mymovieapp_v1.data.repository.MovieRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+@HiltViewModel
+class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): ViewModel() {
+
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> get() = _error
+
+    var topRatedMoviesList = MutableLiveData<List<FilmItem>>()
+    var popularMoviesList = MutableLiveData<List<FilmItem>>()
+    var moviesInTheatersList = MutableLiveData<List<FilmItem>>()
+    var upcomingMoviesList = MutableLiveData<List<FilmItem>>()
+
+    var popularTVSeriesList = MutableLiveData<List<SeriesItem>>()
+    var topRatedTVSeriesList = MutableLiveData<List<SeriesItem>>()
+
+    var searchListForMovies = MutableLiveData<List<FilmItem>>()
+    var searchListForSeries = MutableLiveData<List<SeriesItem>>()
+
+    var detailedMovie = MutableLiveData<DetailResponse>()
+    var detailedSerie = MutableLiveData<DetailResponse>()
+
+    init {
+        getpopularMovies()
+        getMoviesInTheaters()
+        getUpcomingMovies()
+        getTopRatedMovies()
+
+        getPopularTVSeries()
+        getTopRatedTVSeries()
+    }
+
+    fun searchMovies(query : String) {
+        viewModelScope.launch (Dispatchers.IO) {
+            try {
+                searchListForMovies.postValue(movieRepo.searchMovie(query))
+            } catch (e : Exception) {
+                _error.postValue("Failed Code: ${e.message}")
+            }
+        }
+    }
+
+    fun searchSeries(query : String) {
+        viewModelScope.launch (Dispatchers.IO) {
+            try {
+                searchListForSeries.postValue(movieRepo.searchSeries(query))
+            } catch (e : Exception) {
+                _error.postValue("Failed Code: ${e.message}")
+            }
+        }
+    }
+
+
+    fun getpopularMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                popularMoviesList.postValue(movieRepo.getPopularMovies())
+            } catch (e: Exception){
+                _error.postValue("Failed Code: ${e.message}")
+            }
+        }
+    }
+
+    fun getTopRatedMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                topRatedMoviesList.postValue(movieRepo.getTopRatedMovies())
+            } catch (e: Exception){
+                _error.postValue("Failed Code: ${e.message}")
+            }
+        }
+    }
+
+    fun getPopularTVSeries()  = viewModelScope.launch (Dispatchers.IO) {
+        try {
+            popularTVSeriesList.postValue(movieRepo.getPopularTVSeries())
+        } catch (e: Exception){
+            _error.postValue("Failed Code: ${e.message}")
+        }
+    }
+
+    fun getTopRatedTVSeries() = viewModelScope.launch (Dispatchers.IO) {
+        try {
+            topRatedTVSeriesList.postValue(movieRepo.getTopRatedTVSeries())
+        } catch (e: Exception){
+            _error.postValue("Failed Code: ${e.message}")
+        }
+    }
+
+    fun getMoviesInTheaters() = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            moviesInTheatersList.postValue(movieRepo.getMoviesInTheaters())
+        } catch (e: Exception){
+            _error.postValue("Failed Code: ${e.message}")
+        }
+    }
+
+    fun getUpcomingMovies() = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            upcomingMoviesList.postValue(movieRepo.getUpcomingMovies())
+        } catch (e: Exception){
+            _error.postValue("Failed Code: ${e.message}")
+        }
+    }
+
+    fun getMovieDetails(id : Int) = viewModelScope.launch (Dispatchers.IO) {
+        try {
+            detailedMovie.postValue(movieRepo.getMovieDetails(id))
+        } catch (e: Exception){
+            _error.postValue("Failed Code: ${e.message}")
+        }
+    }
+
+    fun getSerieDetails(id : Int) = viewModelScope.launch (Dispatchers.IO) {
+        try {
+            detailedSerie.postValue(movieRepo.getSerieDetails(id))
+        } catch (e: Exception){
+            _error.postValue("Failed Code: ${e.message}")
+        }
+    }
+
+
+
+}
