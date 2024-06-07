@@ -6,13 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
-import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
 import com.mehmetBaloglu.mymovieapp_v1.data.repository.MovieRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +31,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     var searchListForMovies = MutableLiveData<List<FilmItem>>()
     var searchListForSeries = MutableLiveData<List<SeriesItem>>()
 
-    var detailedMovie = MutableLiveData<DetailResponse>()
+    var detailedMovie = MutableLiveData<DetailFilmResponse>()
     var detailedSerie = MutableLiveData<DetailSerieResponse>()
 
     init {
@@ -133,6 +132,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
             _error.postValue("Failed Code: ${e.message}")
         }
     }
+
 
 
 

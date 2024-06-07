@@ -2,7 +2,7 @@ package com.mehmetBaloglu.mymovieapp_v1.retrofit
 
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.GeneralResponse
-import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.genres.GenresResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesResponse
 import com.mehmetBaloglu.mymovieapp_v1.utils.Constants
@@ -95,7 +95,7 @@ interface ApiDao {
         @Header("accept") accept: String = "application/json",
         @Header("Authorization") auth: String = Constants.BEARER_TOKEN,
         @Query("language") language: String = "en-US"
-    ): DetailResponse
+    ): DetailFilmResponse
 
     // Belirtilen dizinin detaylarını getirir
     @GET("tv/{tv_id}")

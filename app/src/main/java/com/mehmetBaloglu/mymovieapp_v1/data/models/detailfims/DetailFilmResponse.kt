@@ -3,7 +3,7 @@ package com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail
 
 import com.google.gson.annotations.SerializedName
 
-data class DetailResponse(
+data class DetailFilmResponse(
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("backdrop_path")

@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentUserBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,8 +32,13 @@ class UserFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db : FirebaseFirestore
 
-    var UsersWatchEDList: MutableList<String> = mutableListOf()
-    var UsersWatchList : MutableList<String> = mutableListOf()
+    private var UsersWatchEDListIDs: MutableList<String> = mutableListOf()
+    private var UsersWatchListIDs : MutableList<String> = mutableListOf()
+
+    private val WatchListMovie : MutableList<DetailFilmResponse> = mutableListOf()
+    private val WatchListSerie : MutableList<DetailSerieResponse> = mutableListOf()
+    //private lateinit var WatchEDListMovie : MutableList<DetailFilmResponse>
+    //private lateinit var WatchEDListSeries : MutableList<DetailSerieResponse>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,46 +57,72 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createWatchListFromFirestore()
+        createUsersWatchListIDsFromFirestore()
 
-        createWatchEDListFromFirestore()
+        createUsersWatchEDListIDFromFirestore()
+
+        xcreateWatchList()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    private fun createWatchListFromFirestore(){
+//----------------------------------------------------------------------------
+    private fun createUsersWatchListIDsFromFirestore(){
         db.collection("WatchList").get().addOnSuccessListener { result ->
             if (!result.isEmpty){
                 val documents = result.documents
 
                 for (document in documents){
                     val ID = document.get("ID") as String
-                    UsersWatchList.add(ID)
+                    UsersWatchListIDs.add(ID)
 
                 }
             }
-            Log.e("watchList",UsersWatchList.toString())
+            Log.e("watchList",UsersWatchListIDs.toString())
         }
     }
 
-    private fun createWatchEDListFromFirestore(){
+    private fun createUsersWatchEDListIDFromFirestore(){
         db.collection("WatchedList").get().addOnSuccessListener { result ->
             if (!result.isEmpty){
                 val documents = result.documents
 
                 for (document in documents){
                     val ID = document.get("ID") as String
-                    UsersWatchEDList.add(ID)
+                    UsersWatchEDListIDs.add(ID)
 
                 }
             }
-            Log.e("watchedList",UsersWatchEDList.toString())
+            Log.e("watchedList",UsersWatchEDListIDs.toString())
+        }
+    }
+
+    private fun createWatchList(){
+        val _id_list =  UsersWatchListIDs
+        for (_id in _id_list){
+            if (_id.startsWith("m")){
+                var _movie = moviesViewModel.getMovieDetails(_id.drop(1).toInt())
+                moviesViewModel.detailedMovie.observe(viewLifecycleOwner){
+                    WatchListMovie.add(it)
+                }
+            }
+            else if (_id.startsWith("s")){
+                moviesViewModel.getSerieDetails(_id.drop(1).toInt())
+                moviesViewModel.detailedSerie.observe(viewLifecycleOwner){
+                    WatchListSerie.add(it)
+                }
+            }
+
         }
 
     }
+
+
+
+
+
 
 
 

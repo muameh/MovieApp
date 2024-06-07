@@ -2,13 +2,11 @@ package com.mehmetBaloglu.mymovieapp_v1.data.repository
 
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
-import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
 import com.mehmetBaloglu.mymovieapp_v1.retrofit.ApiDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 class MovieRepo(var apiDao: ApiDao) {
 
@@ -40,7 +38,7 @@ class MovieRepo(var apiDao: ApiDao) {
         withContext(Dispatchers.IO) {apiDao.searchSeries(query).seriesItems}
 
     //--------------------- DETAILS ---------------------------------------//
-    suspend fun getMovieDetails(id : Int) : DetailResponse =
+    suspend fun getMovieDetails(id : Int) : DetailFilmResponse =
         withContext(Dispatchers.IO) {apiDao.getMovieDetails(id)}
 
     suspend fun getSerieDetails(id : Int) : DetailSerieResponse =
