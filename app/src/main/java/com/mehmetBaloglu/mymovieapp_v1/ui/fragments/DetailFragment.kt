@@ -61,7 +61,6 @@ class DetailFragment : Fragment() {
                 binding.textViewSlogan.text = it.tagline
                 binding.textViewOverView.text = it.overview
 
-
                 var backdropURL = Constants.BASE_IMAGE_URL + it.backdropPath
                 Glide.with(requireContext()).load(backdropURL)
                     .apply(RequestOptions().transform(RoundedCorners(32)))
@@ -93,7 +92,6 @@ class DetailFragment : Fragment() {
                 binding.textViewSlogan.text = it.tagline
                 binding.textViewOverView.text = it.overview
 
-
                 var backdropURL = Constants.BASE_IMAGE_URL + it.backdropPath
                 Glide.with(requireContext()).load(backdropURL)
                     .apply(RequestOptions().transform(RoundedCorners(3)))
@@ -108,15 +106,12 @@ class DetailFragment : Fragment() {
                 binding.imageViewPoster.visibility = View.VISIBLE
 
 
-
                 //todo burası düzenlenecek
                 var yearAndGenres = it.releaseDate + it.genres.toString()
                 binding.textViewYearAndGenres.text = yearAndGenres
 
             }
         }
-
-
 
     }
     fun formatString(input: String): String {
