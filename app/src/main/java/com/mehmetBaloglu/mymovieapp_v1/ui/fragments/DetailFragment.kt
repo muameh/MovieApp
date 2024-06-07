@@ -1,6 +1,7 @@
 package com.mehmetBaloglu.mymovieapp_v1.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,8 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.mehmetBaloglu.mymovieapp_v1.R
+import com.mehmetBaloglu.mymovieapp_v1.data.models.genres.Genre
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentDetailBinding
-import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentHomeBinding
-import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentLoginBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 import com.mehmetBaloglu.mymovieapp_v1.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,11 +52,11 @@ class DetailFragment : Fragment() {
             moviesViewModel.getSerieDetails(_id)
 
             moviesViewModel.detailedSerie.observe(viewLifecycleOwner){
-                binding.textViewMainTitle.text = it.title
+                binding.textViewMainTitle.text = it.name
                 binding.textViewScore.text = it.voteAverage.toString().substring(0,3)
-                binding.textViewLanguage.text = it.originalLanguage.uppercase()
+                binding.textViewLanguage.text = it.originalLanguage!!.uppercase() //todo
                 binding.textViewStatus.text = it.status
-                binding.textViewRevenue.text = formatString(it.revenue.toString())
+                //binding.textViewRevenue.text = formatString(it.revenue.toString())
                 binding.textViewSlogan.text = it.tagline
                 binding.textViewOverView.text = it.overview
 
@@ -88,7 +87,7 @@ class DetailFragment : Fragment() {
                 binding.textViewScore.text = it.voteAverage.toString().substring(0,3)
                 binding.textViewLanguage.text = it.originalLanguage.uppercase()
                 binding.textViewStatus.text = it.status
-                binding.textViewRevenue.text = formatString(it.revenue.toString())
+                binding.textViewRevenue.text = revenueBuilder(it.revenue.toString())
                 binding.textViewSlogan.text = it.tagline
                 binding.textViewOverView.text = it.overview
 
@@ -105,16 +104,13 @@ class DetailFragment : Fragment() {
                     .into(binding.imageViewPoster)
                 binding.imageViewPoster.visibility = View.VISIBLE
 
-
-                //todo burası düzenlenecek
-                var yearAndGenres = it.releaseDate + it.genres.toString()
-                binding.textViewYearAndGenres.text = yearAndGenres
+                binding.textViewYearAndGenres.text = yearAndGenresBuilder(it.genres,it.releaseDate)
 
             }
         }
 
     }
-    fun formatString(input: String): String {
+    fun revenueBuilder(input: String): String {
         // Split the string into chunks of 3 characters
         val chunks = input.chunked(3)
 
@@ -124,5 +120,18 @@ class DetailFragment : Fragment() {
         // Append ".00" at the end
         return "$$formattedString.00"
     }
+
+    fun yearAndGenresBuilder (xgenreList: List<com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.Genre>, xyear: String) : String {
+        var _genres = StringBuilder()
+        for (genre in xgenreList){
+            _genres.append(genre.name).append(", ")
+        }
+        var genres = _genres.dropLast(2)
+        var releaseTime = xyear.substring(0,4)
+        var yearAndGenres = releaseTime + " " +  genres
+        return yearAndGenres
+    }
+
+
 
 }

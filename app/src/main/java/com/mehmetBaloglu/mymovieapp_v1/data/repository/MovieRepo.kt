@@ -1,5 +1,6 @@
 package com.mehmetBaloglu.mymovieapp_v1.data.repository
 
+import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
@@ -42,7 +43,7 @@ class MovieRepo(var apiDao: ApiDao) {
     suspend fun getMovieDetails(id : Int) : DetailResponse =
         withContext(Dispatchers.IO) {apiDao.getMovieDetails(id)}
 
-    suspend fun getSerieDetails(id : Int) : DetailResponse =
+    suspend fun getSerieDetails(id : Int) : DetailSerieResponse =
         withContext(Dispatchers.IO) { apiDao.getSerieDetails(id)}
 
 

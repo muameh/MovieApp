@@ -5,6 +5,7 @@ import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
 import com.mehmetBaloglu.mymovieapp_v1.data.repository.MovieRepo
@@ -32,7 +33,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     var searchListForSeries = MutableLiveData<List<SeriesItem>>()
 
     var detailedMovie = MutableLiveData<DetailResponse>()
-    var detailedSerie = MutableLiveData<DetailResponse>()
+    var detailedSerie = MutableLiveData<DetailSerieResponse>()
 
     init {
         getpopularMovies()
