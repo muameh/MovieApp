@@ -7,12 +7,19 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.R
 import com.mehmetBaloglu.mymovieapp_v1.data.models.genres.Genre
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentDetailBinding
@@ -28,12 +35,19 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var popup: PopupMenu
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db : FirebaseFirestore
+
     val bundle :DetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val tempViewModel: MoviesViewModel by viewModels()
         moviesViewModel = tempViewModel
+
+        auth = Firebase.auth
+        db = Firebase.firestore
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -149,14 +163,31 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.IDwatched){
-            //todo
+            val _hashMap = hashMapOf<Any,Any>()
+            _hashMap.put("email",auth.currentUser!!.email.toString())
+            _hashMap.put("ID",bundle.id.toString())
+            _hashMap.put("date",Timestamp.now())
+            db.collection("WatchedList").add(_hashMap)
+                .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watched List",Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
         } else if (item?.itemId == R.id.IDtowatch) {
-            //todo
+            val _hashMap = hashMapOf<Any,Any>()
+            _hashMap.put("email",auth.currentUser!!.email.toString())
+            _hashMap.put("ID",bundle.id.toString())
+            _hashMap.put("date",Timestamp.now())
+            db.collection("WatchList").add(_hashMap)
+                .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watch List",Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
         } else if (item?.itemId == R.id.IDFollow){
-            //todo
+            val _hashMap = hashMapOf<Any,Any>()
+            _hashMap.put("email",auth.currentUser!!.email.toString())
+            _hashMap.put("ID",bundle.id.toString())
+            _hashMap.put("date",Timestamp.now())
+            db.collection("Follow").add(_hashMap)
+                .addOnSuccessListener { Toast.makeText(requireContext(),"You are following this movie",Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
         }
         return true
     }
-
 
 }
