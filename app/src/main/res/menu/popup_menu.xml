@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/IDwatched"
+        android:title="add to Watched List" />
+    <item
+        android:id="@+id/IDtowatch"
+        android:title="add to Watch List" />
+    <item
+        android:id="@+id/IDFollow"
+        android:title="Just Follow" />
+</menu>

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -216,6 +217,18 @@
                 android:textColor="@color/green"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPoster"
                 app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/bottom_nav_color"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_star_rate_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.mehmetBaloglu.mymovieapp_v1.ui.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.databinding.CardDesing1Binding
+import com.mehmetBaloglu.mymovieapp_v1.ui.fragments.HomeFragmentDirections
+import com.mehmetBaloglu.mymovieapp_v1.ui.fragments.SearchFragmentDirections
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 import com.mehmetBaloglu.mymovieapp_v1.utils.Constants
 
@@ -56,6 +59,16 @@ class AdapterSearchMovies (var mContext: Context, var viewModel: MoviesViewModel
         holder.itemBinding.apply {
             textViewFilmName.text = currentFilm.title
         }
+
+        holder.itemBinding.cardView.setOnClickListener {
+            var id = currentFilm.id
+            var _id = "m" + id.toString()
+
+            val direction = SearchFragmentDirections.actionSearchFragmentToDetailFragment2(_id)
+            Navigation.findNavController(it).navigate(direction)
+
+        }
+
 
     }
 
