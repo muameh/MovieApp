@@ -61,7 +61,7 @@ class UserFragment : Fragment() {
 
         createUsersWatchEDListIDFromFirestore()
 
-        xcreateWatchList()
+        //xcreateWatchList()
     }
 
     override fun onDestroyView() {
@@ -98,8 +98,8 @@ class UserFragment : Fragment() {
             Log.e("watchedList",UsersWatchEDListIDs.toString())
         }
     }
-
-    private fun createWatchList(){
+/*
+private fun createWatchList(){
         val _id_list =  UsersWatchListIDs
         for (_id in _id_list){
             if (_id.startsWith("m")){
@@ -118,6 +118,8 @@ class UserFragment : Fragment() {
         }
 
     }
+ */
+
 
 
 
