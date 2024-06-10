@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentUserBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterSearchMovies
+import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.WatchEDListAdapter
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.WatchListAdapter
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +37,7 @@ class UserFragment : Fragment() {
     private lateinit var db : FirebaseFirestore
 
     private lateinit var watchListAdapter: WatchListAdapter
+    private lateinit var watchEDListAdapter: WatchEDListAdapter
 
     private var UserWatchList : MutableList<ForFirebaseResponse> = mutableListOf()
     private var UserWatchEDList : MutableList<ForFirebaseResponse> = mutableListOf()
@@ -59,12 +63,11 @@ class UserFragment : Fragment() {
         binding.textViewUserMail.text = auth.currentUser?.email
 
         createUserWatchList()
-
-        Log.e("ccc",UserWatchList.toString())
-
         createUsersWatchEDList()
 
         createWatchListRecyclerView()
+        createWatchEDListRecyclerView()
+
     }
 
     override fun onDestroyView() {
@@ -82,11 +85,19 @@ class UserFragment : Fragment() {
         }
     }
 
+    private fun createWatchEDListRecyclerView() {
+        watchEDListAdapter = WatchEDListAdapter(requireContext(), moviesViewModel)
+        binding.recyclerViewWatchEDList.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = watchEDListAdapter
+        }
+    }
+
+
     private fun createUserWatchList(){
         db.collection("WatchList").get().addOnSuccessListener { result ->
             if (!result.isEmpty){
                 val documents = result.documents
-
 
 
                 for (document in documents){
@@ -97,6 +108,7 @@ class UserFragment : Fragment() {
 
                     UserWatchList.add(_item)
                 }
+
                 //burası önemli !!! listeyi tüm sorgu bitipte liste oluşturulduktan sonra verdik
                 //öteki türlü asenkron yapıdan dolayı patlıyor
                 watchListAdapter.differ.submitList(UserWatchList)
@@ -104,8 +116,18 @@ class UserFragment : Fragment() {
         }
     }
 
+
+
     private fun createUsersWatchEDList(){
-        db.collection("WatchedList").get().addOnSuccessListener { result ->
+        val currentUsersEmail = auth.currentUser?.email.toString()
+
+        Log.e("email",currentUsersEmail)
+
+        db.collection("WatchedList")
+            .whereEqualTo("email",currentUsersEmail)
+            .orderBy("date",Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { result ->
             if (!result.isEmpty){
                 val documents = result.documents
 
@@ -117,6 +139,7 @@ class UserFragment : Fragment() {
 
                     UserWatchEDList.add(_item)
                 }
+                watchEDListAdapter.differ.submitList(UserWatchEDList)
             }
         }
     }

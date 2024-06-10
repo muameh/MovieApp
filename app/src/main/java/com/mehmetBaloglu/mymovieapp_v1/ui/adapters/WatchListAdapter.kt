@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.databinding.CardDesing1Binding
+import com.mehmetBaloglu.mymovieapp_v1.databinding.CardDesingForUserBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.fragments.HomeFragmentDirections
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 import com.mehmetBaloglu.mymovieapp_v1.utils.Constants
@@ -20,7 +21,7 @@ import com.mehmetBaloglu.mymovieapp_v1.utils.Constants
 class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
 : RecyclerView.Adapter<WatchListAdapter.Adapter1ViewHolder>() {
 
-    inner class Adapter1ViewHolder(val itemBinding: CardDesing1Binding)
+    inner class Adapter1ViewHolder(val itemBinding: CardDesingForUserBinding)
         : RecyclerView.ViewHolder(itemBinding.root)
 
 
@@ -38,7 +39,7 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter1ViewHolder {
-        val binding = CardDesing1Binding.inflate(LayoutInflater.from(parent.context), parent,false)
+        val binding = CardDesingForUserBinding.inflate(LayoutInflater.from(parent.context), parent,false)
         return Adapter1ViewHolder(binding)
     }
 
