@@ -19,6 +19,7 @@
     <color name="bottom_sheet_bg">#2B2B2B</color>
     <color name="bottom_nav_color">#aaFFFFFF</color>
     <color name="green">#006400</color>
+    <color name="transparent">#aa000000</color>
 
     <color name="tabBackground">#212121</color> <!-- Koyu arka plan rengi -->
     <color name="tabIndicator">#FF4081</color> <!-- Seçilen sekmenin göstergesi rengi -->

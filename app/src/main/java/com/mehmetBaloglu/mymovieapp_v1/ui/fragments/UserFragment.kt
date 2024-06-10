@@ -37,6 +37,7 @@ class UserFragment : Fragment() {
 
     private val WatchListMovie : MutableList<DetailFilmResponse> = mutableListOf()
     private val WatchListSerie : MutableList<DetailSerieResponse> = mutableListOf()
+
     //private lateinit var WatchEDListMovie : MutableList<DetailFilmResponse>
     //private lateinit var WatchEDListSeries : MutableList<DetailSerieResponse>
 
@@ -54,21 +55,14 @@ class UserFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        createUsersWatchListIDsFromFirestore()
-
-        createUsersWatchEDListIDFromFirestore()
-
-        //xcreateWatchList()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 //----------------------------------------------------------------------------
+
+
     private fun createUsersWatchListIDsFromFirestore(){
         db.collection("WatchList").get().addOnSuccessListener { result ->
             if (!result.isEmpty){

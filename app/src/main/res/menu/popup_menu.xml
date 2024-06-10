@@ -7,7 +7,4 @@
     <item
         android:id="@+id/IDtowatch"
         android:title="add to Watch List" />
-    <item
-        android:id="@+id/IDFollow"
-        android:title="Just Follow" />
 </menu>

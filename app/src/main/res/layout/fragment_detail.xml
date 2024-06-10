@@ -53,7 +53,7 @@
                 tools:visibility="visible" />
 
             <TextView
-                android:id="@+id/textViewtit"
+                android:id="@+id/textViewOrgtit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -72,7 +72,7 @@
                 android:layout_marginTop="2dp"
                 android:text="Kingdom of the Planet of the Apes"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewtit" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewOrgtit" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -192,7 +192,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="2dp"
                 android:text="TextView"
-                android:textColor="@color/green"
+                android:textColor="#06D001"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPoster"
                 app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
@@ -214,7 +214,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="2dp"
                 android:text="TextView"
-                android:textColor="@color/green"
+                android:textColor="#06D001"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPoster"
                 app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
