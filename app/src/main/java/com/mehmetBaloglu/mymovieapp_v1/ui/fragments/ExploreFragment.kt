@@ -2,10 +2,12 @@ package com.mehmetBaloglu.mymovieapp_v1.ui.fragments
 
 import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -102,6 +104,83 @@ class ExploreFragment : Fragment() {
         binding.pickerRateMax.setOnValueChangedListener { picker, oldVal, newVal ->
             binding.tvRateMax.text = xdecimalValues[newVal]
         }
+
+    //------------------------------------------------------------
+        binding.pickerRuntimeMin.minValue = 0
+        binding.pickerRuntimeMin.maxValue = 400
+        var showInitially_3 = 120
+        binding.pickerRuntimeMin.value = showInitially_3
+        binding.tvRuntimeMin.text = showInitially_3.toString()
+        binding.pickerRuntimeMin.wrapSelectorWheel = false
+        binding.pickerRuntimeMin.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+
+        binding.pickerRuntimeMin.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.tvRuntimeMin.text = newVal.toString()
+        }
+
+    //------------------------------------------------------------
+
+        binding.pickerRuntimeMax.minValue = 0
+        binding.pickerRuntimeMax.maxValue = 400
+        var showInitially_4 = 200
+        binding.pickerRuntimeMax.value = showInitially_4
+        binding.tvRuntimeMax.text = showInitially_4.toString()
+        binding.pickerRuntimeMax.wrapSelectorWheel = false
+        binding.pickerRuntimeMax.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+
+        binding.pickerRuntimeMax.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.tvRuntimeMax.text = newVal.toString()
+
+        }
+
+    //------------------------------------------------------------
+
+        val valuesList = ArrayList<Int>()
+        var value = 0
+        while (value <= 500) {
+            valuesList.add(value)
+            value += 50
+        }
+        val valuesArray = valuesList.toIntArray()
+
+        binding.pickerUserVoteMin.minValue = 0
+        binding.pickerUserVoteMin.maxValue = valuesArray.size - 1
+        binding.pickerUserVoteMin.displayedValues = valuesArray.map { it.toString() }.toTypedArray()
+        binding.pickerUserVoteMin.wrapSelectorWheel = false
+        binding.pickerUserVoteMin.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+
+        binding.pickerUserVoteMin.setOnValueChangedListener { picker, oldVal, newVal ->
+            val selectedValue = valuesArray[newVal]
+            binding.tvMinUser.text = selectedValue.toString()
+        }
+
+        //------------------------------------------------------------
+        val genres = arrayOf(
+            "Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary",
+            "Drama", "Family", "Fantasy", "History", "Horror", "Music", "Mystery",
+            "Romance", "Science Fiction", "TV Movie", "Thriller", "War", "Western"
+        )
+
+        val selectedGenresSet = HashSet<String>()
+
+        binding.pickerGenres.minValue = 0
+        binding.pickerGenres.maxValue = genres.size - 1
+        binding.pickerGenres.displayedValues = genres
+        binding.pickerGenres.wrapSelectorWheel = false
+        binding.pickerGenres.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+
+        binding.button.setOnClickListener {
+            val selectedGenre = genres[binding.pickerGenres.value]
+            if (selectedGenresSet.contains(selectedGenre)) {
+                Toast.makeText(requireContext(), "$selectedGenre already selected!", Toast.LENGTH_SHORT).show()
+            } else {
+                selectedGenresSet.add(selectedGenre)
+                binding.tvSelectedGenres.text = selectedGenresSet.joinToString(", ")
+            }
+        }
+
+
+
 
 
 

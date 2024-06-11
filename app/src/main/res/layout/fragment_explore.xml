@@ -12,6 +12,17 @@
         tools:context=".ui.fragments.ExploreFragment">
 
         <NumberPicker
+            android:id="@+id/pickerGenres"
+            android:layout_width="94dp"
+            android:layout_height="123dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="64dp"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/pickerUserVoteMin"
+            app:layout_constraintStart_toStartOf="@+id/pickerUserVoteMin"
+            app:layout_constraintTop_toBottomOf="@+id/pickerUserVoteMin" />
+
+        <NumberPicker
             android:id="@+id/pickerReleaseDateMax"
             android:layout_width="65dp"
             android:layout_height="125dp"
@@ -43,7 +54,7 @@
             android:layout_height="116dp"
             android:layout_marginStart="48dp"
             android:gravity="center"
-            android:text="Release Date Between"
+            android:text="Release Date    (year)"
             app:layout_constraintBottom_toBottomOf="@+id/pickerReleaseDateMin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/pickerReleaseDateMin"
@@ -97,9 +108,10 @@
 
         <TextView
             android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_width="62dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
             android:text="Rate"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="@+id/textView1343"
@@ -141,13 +153,12 @@
 
         <TextView
             android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_marginTop="120dp"
-            android:layout_marginBottom="32dp"
-            android:text="Runtime"
+            android:gravity="center"
+            android:text="Runtime (min)"
             android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/textView19"
             app:layout_constraintStart_toStartOf="@+id/textView19"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
@@ -197,6 +208,75 @@
             app:layout_constraintHorizontal_bias="0.571"
             app:layout_constraintStart_toStartOf="@+id/pickerRuntimeMax"
             app:layout_constraintTop_toBottomOf="@+id/pickerRuntimeMax" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="109dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="120dp"
+            android:gravity="center"
+            android:text="Minimum User Votes"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView17"
+            app:layout_constraintStart_toStartOf="@+id/textView17"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <NumberPicker
+            android:id="@+id/pickerUserVoteMin"
+            android:layout_width="65dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="64dp"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/pickerRuntimeMin"
+            app:layout_constraintStart_toStartOf="@+id/pickerRuntimeMin"
+            app:layout_constraintTop_toTopOf="@+id/tvRuntimeMin" />
+
+        <TextView
+            android:id="@+id/tvMinUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/pickerUserVoteMin"
+            app:layout_constraintStart_toStartOf="@+id/pickerUserVoteMin"
+            app:layout_constraintTop_toBottomOf="@+id/pickerUserVoteMin" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:text="Genres"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView10"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="66dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="40dp"
+            android:text="add"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/pickerGenres"
+            app:layout_constraintStart_toStartOf="@+id/pickerGenres"
+            app:layout_constraintTop_toBottomOf="@+id/pickerGenres" />
+
+        <TextView
+            android:id="@+id/tvSelectedGenres"
+            android:layout_width="97dp"
+            android:layout_height="117dp"
+            android:layout_marginStart="24dp"
+            android:gravity="center"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/pickerGenres"
+            app:layout_constraintStart_toEndOf="@+id/pickerGenres"
+            app:layout_constraintTop_toTopOf="@+id/pickerGenres" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
