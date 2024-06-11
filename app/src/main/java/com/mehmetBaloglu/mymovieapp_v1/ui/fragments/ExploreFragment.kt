@@ -44,17 +44,65 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.yearPicker1.minValue = 0
-        binding.yearPicker1.maxValue = 100
+    //------------------------------------------------------------
+        binding.pickerReleaseDateMin.minValue = 1874
+        binding.pickerReleaseDateMin.maxValue = 2024
+        var showInitially_1 = 1990
+        binding.pickerReleaseDateMin.value = showInitially_1
+        binding.tvReleaseDateMin.text = showInitially_1.toString()
+        binding.pickerReleaseDateMin.wrapSelectorWheel = false
+        binding.pickerReleaseDateMin.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
 
-        //binding.yearPicker1.wrapSelectorWheel = true
-
-        binding.yearPicker1.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-
-
-        binding.yearPicker1.setOnValueChangedListener { picker, oldVal, newVal ->
-            binding.textView10.text = newVal.toString()
+        binding.pickerReleaseDateMin.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.tvReleaseDateMin.text = newVal.toString()
         }
+    //------------------------------------------------------------
+        binding.pickerReleaseDateMax.minValue = 1970
+        binding.pickerReleaseDateMax.maxValue = 2024
+        var showInitially_2 = 2000
+        binding.pickerReleaseDateMax.value = showInitially_2
+        binding.tvReleaseDateMax.text = showInitially_2.toString()
+        binding.pickerReleaseDateMax.wrapSelectorWheel = false
+        binding.pickerReleaseDateMax.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+
+        binding.pickerReleaseDateMax.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.tvReleaseDateMax.text = newVal.toString()
+        }
+    //------------------------------------------------------------
+        val decimalValues = (1..100).map { String.format("%.1f", it / 10.0) }.toTypedArray()
+        binding.pickerRateMin.minValue = 0
+        binding.pickerRateMin.maxValue = decimalValues.size - 1
+        binding.pickerRateMin.wrapSelectorWheel = false
+        binding.pickerRateMin.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+
+        val initialIndex = decimalValues.indexOf("5.0")
+        binding.pickerRateMin.value = initialIndex
+        binding.tvRateMin.text = decimalValues[initialIndex]
+
+        binding.pickerRateMin.displayedValues = decimalValues
+
+        binding.pickerRateMin.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.tvRateMin.text = decimalValues[newVal]
+        }
+
+    //------------------------------------------------------------
+
+        val xdecimalValues = (1..100).map { String.format("%.1f", it / 10.0) }.toTypedArray()
+        binding.pickerRateMax.minValue = 0
+        binding.pickerRateMax.maxValue = xdecimalValues.size - 1
+        binding.pickerRateMax.wrapSelectorWheel = false
+        binding.pickerRateMax.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+
+        val xinitialIndex = xdecimalValues.indexOf("9.0")
+        binding.pickerRateMax.value = xinitialIndex
+        binding.tvRateMax.text = xdecimalValues[xinitialIndex]
+
+        binding.pickerRateMax.displayedValues = xdecimalValues
+
+        binding.pickerRateMax.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.tvRateMax.text = xdecimalValues[newVal]
+        }
+
 
 
 
