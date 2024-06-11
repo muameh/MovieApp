@@ -64,7 +64,7 @@ class UserFragment : Fragment() {
         binding.textViewUserMail.text = auth.currentUser?.email
 
         createUserWatchList()
-        createUsersWatchEDList()
+        xxcreateUsersWatchEDList()
 
         createWatchListRecyclerView()
         createWatchEDListRecyclerView()
@@ -113,6 +113,32 @@ class UserFragment : Fragment() {
                 //burası önemli !!! listeyi tüm sorgu bitipte liste oluşturulduktan sonra verdik
                 //öteki türlü asenkron yapıdan dolayı patlıyor
                 watchListAdapter.differ.submitList(UserWatchList)
+            }
+        }
+    }
+
+    private fun xxcreateUsersWatchEDList(){
+        val currentUsersEmail = Firebase.auth.currentUser?.email.toString()
+
+        db.collection("WatchedList")
+            .whereEqualTo("email",currentUsersEmail)
+            .addSnapshotListener { value, error ->
+            if(error != null){
+                //hata msjı
+            } else{
+                if (value!=null){
+                    val documents = value.documents
+
+                    for (document in documents){
+                        val ID = document.get("ID") as String
+                        val name : String = document.get("filmName") as String
+                        var posterUrl : String = document.get("filmPosterUrl") as String
+                        var _item = ForFirebaseResponse(ID, name, posterUrl)
+
+                        UserWatchEDList.add(_item)
+                    }
+                    watchEDListAdapter.differ.submitList(UserWatchEDList)
+                }
             }
         }
     }

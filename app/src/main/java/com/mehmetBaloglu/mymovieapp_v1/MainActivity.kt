@@ -62,4 +62,8 @@ PROJE NASIL OLACAK ?
 4- FAV'A KAYDEDİLENLER ROOM A DEĞİL FİREBASE'E KAYDEDİLECEK
 5- CARD A TIKLANINCA FİLMİN DETAYLARINA GÖTÜRECEK
 
+
+yapılacaklar
+-- silmeye tıklanınca anında ekrandan kaybolmuyor
+
 */

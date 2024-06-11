@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.databinding.CardDesing1Binding
@@ -63,16 +65,33 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
         }
 
 
-        /*
-        holder.itemBinding.cardView.setOnClickListener {
-            var id = currentFilm.id
-            var _id = "m" + id.toString()
+        holder.itemBinding.imageViewDelete.setOnClickListener {
+            val firestore = Firebase.firestore
 
-            val direction = HomeFragmentDirections.actionHomeFragmentToDetailFragment(_id)
-            Navigation.findNavController(it).navigate(direction)
-
+            firestore.collection("WatchList")
+                .whereEqualTo("ID", currentFilm.filmID)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val document = querySnapshot.documents[0]
+                        firestore.collection("WatchList").document(document.id).delete()
+                            .addOnSuccessListener {
+                                // Başarıyla silindiğinde yapılacak işlemler
+                                println("Document successfully deleted!")
+                            }
+                            .addOnFailureListener { e ->
+                                // Hata durumunda yapılacak işlemler
+                                println("Error deleting document: $e")
+                            }
+                    } else {
+                        println("No documents found with the given ID")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    // Hata durumunda yapılacak işlemler
+                    println("Error getting documents: $e")
+                }
         }
-         */
 
 
 

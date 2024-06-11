@@ -1,43 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.ExploreFragment" >
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Explore ..."
-        android:textSize="34sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.ExploreFragment">
 
-    <NumberPicker
-        android:id="@+id/yearPicker1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        android:textColor="@color/red"/>
+        <NumberPicker
+            android:id="@+id/yearPicker2"
+            android:layout_width="65dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="128dp"
+            android:layout_marginEnd="48dp"
+            android:textColor="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/yearPicker1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/yearPicker1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.174" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="500dp"
-        android:text="TextView"
-        android:textColor="@color/red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/yearPicker1" />
+        <NumberPicker
+            android:id="@+id/yearPicker1"
+            android:layout_width="65dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="128dp"
+            android:textColor="@color/red"
+            app:layout_constraintStart_toEndOf="@+id/textView1343"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView1343"
+            android:layout_width="73dp"
+            android:layout_height="116dp"
+            android:layout_marginStart="48dp"
+            android:gravity="center"
+            android:text="Release Date Between"
+            app:layout_constraintBottom_toBottomOf="@+id/yearPicker1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/yearPicker1"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Explore ..."
+            android:textSize="34sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <NumberPicker
+            android:id="@+id/yearPicker341"
+            android:layout_width="65dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="64dp"
+            android:textColor="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/yearPicker35"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker2"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/yearPicker35"
+            app:layout_constraintTop_toTopOf="@+id/textView14"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker1"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker1"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker1" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker2"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker2"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker2" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:text="Rate"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView1343"
+            app:layout_constraintStart_toStartOf="@+id/textView1343"
+            app:layout_constraintTop_toBottomOf="@+id/textView1343" />
+
+        <NumberPicker
+            android:id="@+id/yearPicker35"
+            android:layout_width="65dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="64dp"
+            android:textColor="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/textView19"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker1"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker1"
+            app:layout_constraintTop_toTopOf="@+id/textView10"
+            app:layout_constraintVertical_bias="0.425" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker35"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker35"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker35" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker341"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker341"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker341" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="32dp"
+            android:text="Run Time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView19"
+            app:layout_constraintStart_toStartOf="@+id/textView19"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+        <NumberPicker
+            android:id="@+id/yearPicker315"
+            android:layout_width="65dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="64dp"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker35"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker35"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker35" />
+
+        <NumberPicker
+            android:id="@+id/yearPicker33615"
+            android:layout_width="65dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+
+            android:layout_marginTop="64dp"
+            android:textColor="@color/purple_700"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker341"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker341"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker341" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker315"
+            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker315"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker315" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/red"
+            app:layout_constraintEnd_toEndOf="@+id/yearPicker33615"
+            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintStart_toStartOf="@+id/yearPicker33615"
+            app:layout_constraintTop_toBottomOf="@+id/yearPicker33615" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
