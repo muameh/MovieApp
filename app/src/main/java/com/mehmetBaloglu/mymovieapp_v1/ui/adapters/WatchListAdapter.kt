@@ -35,6 +35,7 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
             return oldItem == newItem
         }
     }
+
     val differ = AsyncListDiffer(this,differCallback)
 
 

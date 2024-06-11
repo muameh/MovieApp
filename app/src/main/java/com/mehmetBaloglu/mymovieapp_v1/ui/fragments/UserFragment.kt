@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
@@ -119,7 +120,7 @@ class UserFragment : Fragment() {
 
 
     private fun createUsersWatchEDList(){
-        val currentUsersEmail = auth.currentUser?.email.toString()
+        val currentUsersEmail = Firebase.auth.currentUser?.email.toString()
 
         Log.e("email",currentUsersEmail)
 
@@ -139,9 +140,13 @@ class UserFragment : Fragment() {
 
                     UserWatchEDList.add(_item)
                 }
+
                 watchEDListAdapter.differ.submitList(UserWatchEDList)
             }
-        }
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_LONG).show()
+                Log.e("failure_message",it.localizedMessage.toString())
+            }
     }
 }
 

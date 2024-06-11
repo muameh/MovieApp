@@ -151,6 +151,10 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                 .apply(RequestOptions().transform(RoundedCorners(32)))
                 .into(binding.imageViewPoster)
             binding.imageViewPoster.visibility = View.VISIBLE
+
+            filmID = it.id
+            filmName = it.name
+            filmPosterURL = posterURL
         }
     }
 
