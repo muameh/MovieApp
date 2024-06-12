@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
@@ -150,6 +151,8 @@ class ExploreFragment : Fragment() {
 
         binding.pickerUserVoteMin.minValue = 0
         binding.pickerUserVoteMin.maxValue = valuesArray.size - 1
+        var showInitiallyx = 0
+        binding.tvMinUser.text = showInitiallyx.toString()
         binding.pickerUserVoteMin.displayedValues = valuesArray.map { it.toString() }.toTypedArray()
         binding.pickerUserVoteMin.wrapSelectorWheel = false
         binding.pickerUserVoteMin.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
@@ -186,42 +189,71 @@ class ExploreFragment : Fragment() {
 
 
         binding.buttonSearch.setOnClickListener{
-            var min_year = binding.tvReleaseDateMin.text
-            var max_year = binding.tvReleaseDateMax.text
 
-            var min_rate = binding.tvRateMin.text
-            var max_rate = binding.tvRateMax.text
+            var min_year = binding.tvReleaseDateMin.text.toString() + "-01-01"
+            var max_year = binding.tvReleaseDateMax.text.toString() + "-12-30"
 
-            var min_runtime = binding.tvRuntimeMin.text
-            var max_runtime = binding.tvRuntimeMax.text
+            var min_rate = binding.tvRateMin.text.toString().toDouble()
+            var max_rate = binding.tvRateMax.text.toString().toDouble()
 
-            var min_uservote = binding.tvMinUser.text
+            var min_runtime = binding.tvRuntimeMin.text.toString().toInt()
+            var max_runtime = binding.tvRuntimeMax.text.toString().toInt()
+
+            var min_uservote = binding.tvMinUser.text.toString().toInt()
 
             var genres_list = binding.tvSelectedGenres.text.toString()
             var genres_id_list = createGenresIDs(genres_list)
 
+            var keyWord : String? = null
+            if (binding.editTextKeyWord.text.isNotEmpty()){
+                keyWord = binding.editTextKeyWord.text.toString()
+            }
+
+            Log.d("xxxParams1",min_year+ " " + max_year+ " " + min_rate+ " " + max_rate+ " " + min_runtime+ " " + max_runtime+ " ")
+            Log.d("xxxParams2", min_uservote.toString()+ " "+genres_id_list+ " "+keyWord)
+
+            moviesViewModel.discoverMovies(
+                releaseDateGte = min_year,
+                releaseDateLte = max_year,
+                runtimeLte = max_runtime,
+                runtimeGte = min_runtime,
+                withGenres = genres_id_list,
+                keyWord = keyWord,
+                voteCount = min_uservote,
+                voteAverageLte = max_rate,
+                voteAverageGte = min_rate
+            )
+
+            adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
+            //binding.recyclerViewDiscoverMovies.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.recyclerViewDiscoverMovies.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+            binding.recyclerViewDiscoverMovies.adapter = adapterSearchMovies
+
+            moviesViewModel.discoveredMoviesList.observe(viewLifecycleOwner){
+                adapterSearchMovies.differ.submitList(it)
+                if (it.isNotEmpty()){
+                    binding.recyclerViewDiscoverMovies.visibility = View.VISIBLE
+                }
+            }
 
         }
 
-        moviesViewModel.discoverMovies(
+/*
+ moviesViewModel.discoverMovies(
             "2000-01-01",
             "2010-01-01",
             "28, 12",
             6.0,
             9.0,
             60,
-            200)
+            200,
+            300,
+            null
+        )
+ */
 
-        adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
-        binding.recyclerViewDiscoverMovies.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerViewDiscoverMovies.adapter = adapterSearchMovies
 
-        moviesViewModel.discoveredMoviesList.observe(viewLifecycleOwner){
-            adapterSearchMovies.differ.submitList(it)
-            if (it.isNotEmpty()){
-                binding.recyclerViewDiscoverMovies.visibility = View.VISIBLE
-            }
-        }
+
 
     }
 

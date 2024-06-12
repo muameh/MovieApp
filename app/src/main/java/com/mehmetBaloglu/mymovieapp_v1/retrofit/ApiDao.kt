@@ -168,7 +168,8 @@ interface ApiDao {
         @Query("vote_average.gte") voteAverageLte: Double,
         @Query("with_runtime.gte") runtimeGte: Int, //90 ***
         @Query("with_runtime.lte") runtimeLte: Int, //200 ***
-        //@Query("with_keywords") withKeywords: String
+        @Query("with_keywords") withKeywords: String? = null, // Optional parameter
+        @Query("vote_count.gte") voteCountGte : Int = 0
     ): GeneralResponse
 
 

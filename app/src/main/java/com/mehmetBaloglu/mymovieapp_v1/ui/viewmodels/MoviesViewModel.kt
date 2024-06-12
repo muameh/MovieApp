@@ -143,7 +143,9 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         voteAverageGte: Double,
         voteAverageLte: Double,
         runtimeGte: Int,
-        runtimeLte: Int
+        runtimeLte: Int,
+        voteCount : Int,
+        keyWord : String?
     ) = viewModelScope.launch  (Dispatchers.IO) {
         try {
             discoveredMoviesList.postValue(movieRepo.discoverMovies(releaseDateGte,
@@ -152,7 +154,10 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
                 voteAverageGte,
                 voteAverageLte,
                 runtimeGte,
-                runtimeLte))
+                runtimeLte,
+                voteCount,
+                keyword = keyWord ))
+            Log.e("xxx1",discoveredMoviesList.toString())
         } catch (e: Exception){
             _error.postValue("Failed Code: ${e.message}")
             Log.e("xxx2",e.toString())

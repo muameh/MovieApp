@@ -54,7 +54,9 @@ class MovieRepo(var apiDao: ApiDao) {
         voteAverageGte: Double,
         voteAverageLte: Double,
         runtimeGte: Int,
-        runtimeLte: Int
+        runtimeLte: Int,
+        voteCount : Int,
+        keyword : String?
     ): List<FilmItem> =
         withContext(Dispatchers.IO) {
             apiDao.discoverMovies(
@@ -64,7 +66,9 @@ class MovieRepo(var apiDao: ApiDao) {
                 voteAverageGte = voteAverageGte,
                 voteAverageLte = voteAverageLte,
                 runtimeGte = runtimeGte,
-                runtimeLte = runtimeLte
+                runtimeLte = runtimeLte,
+                voteCountGte = voteCount,
+                withKeywords = keyword
             )
                 .filmItems
         }
