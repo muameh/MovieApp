@@ -1,5 +1,6 @@
 package com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import androidx.lifecycle.MutableLiveData
@@ -34,7 +35,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     var detailedMovie = MutableLiveData<DetailFilmResponse>()
     var detailedSerie = MutableLiveData<DetailSerieResponse>()
 
-    var discoveredMovies = MutableLiveData<List<FilmItem>>()
+    var discoveredMoviesList = MutableLiveData<List<FilmItem>>()
 
     init {
         getpopularMovies()
@@ -145,7 +146,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         runtimeLte: Int
     ) = viewModelScope.launch  (Dispatchers.IO) {
         try {
-            discoveredMovies.postValue(movieRepo.discoverMovies(releaseDateGte,
+            discoveredMoviesList.postValue(movieRepo.discoverMovies(releaseDateGte,
                 releaseDateLte,
                 withGenres,
                 voteAverageGte,
@@ -154,6 +155,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
                 runtimeLte))
         } catch (e: Exception){
             _error.postValue("Failed Code: ${e.message}")
+            Log.e("xxx2",e.toString())
         }
     }
 

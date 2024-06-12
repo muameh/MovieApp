@@ -30,12 +30,16 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
+
         val currentUser = auth.currentUser
 
         if (currentUser != null) {
             val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
             view?.let { Navigation.findNavController(it).navigate(action) }
         }
+
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

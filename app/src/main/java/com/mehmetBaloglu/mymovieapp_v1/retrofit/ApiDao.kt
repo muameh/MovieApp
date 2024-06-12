@@ -154,7 +154,7 @@ interface ApiDao {
     @GET("discover/movie")
     suspend fun discoverMovies(
         @Header("accept") accept: String = "application/json",
-        @Header("Authorization") auth: String = "Bearer YOUR_ACCESS_TOKEN",
+        @Header("Authorization") auth: String = Constants.BEARER_TOKEN,
         @Query("language") language: String = "en-US",
         @Query("sort_by") sortBy: String = "popularity.desc",
         @Query("include_adult") includeAdult: Boolean = false,

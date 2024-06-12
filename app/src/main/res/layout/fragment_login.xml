@@ -68,7 +68,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="50dp"
         android:text="I am a new User"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"

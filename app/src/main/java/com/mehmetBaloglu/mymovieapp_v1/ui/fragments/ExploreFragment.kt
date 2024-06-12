@@ -2,6 +2,7 @@ package com.mehmetBaloglu.mymovieapp_v1.ui.fragments
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,12 +12,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.R
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentDetailBinding
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentExploreBinding
+import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterSearchMovies
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +29,8 @@ class ExploreFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var moviesViewModel: MoviesViewModel
+
+    private lateinit var adapterSearchMovies: AdapterSearchMovies
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -198,11 +203,25 @@ class ExploreFragment : Fragment() {
 
         }
 
+        moviesViewModel.discoverMovies(
+            "2000-01-01",
+            "2010-01-01",
+            "28, 12",
+            6.0,
+            9.0,
+            60,
+            200)
 
+        adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
+        binding.recyclerViewDiscoverMovies.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewDiscoverMovies.adapter = adapterSearchMovies
 
-
-
-
+        moviesViewModel.discoveredMoviesList.observe(viewLifecycleOwner){
+            adapterSearchMovies.differ.submitList(it)
+            if (it.isNotEmpty()){
+                binding.recyclerViewDiscoverMovies.visibility = View.VISIBLE
+            }
+        }
 
     }
 
