@@ -7,6 +7,7 @@ import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
 import com.mehmetBaloglu.mymovieapp_v1.retrofit.ApiDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.http.Query
 
 class MovieRepo(var apiDao: ApiDao) {
 
@@ -43,6 +44,34 @@ class MovieRepo(var apiDao: ApiDao) {
 
     suspend fun getSerieDetails(id : Int) : DetailSerieResponse =
         withContext(Dispatchers.IO) { apiDao.getSerieDetails(id)}
+
+    //------------------------DISCOVER----------------------------------------------//
+
+    suspend fun discoverMovies(
+        releaseDateGte: String,
+        releaseDateLte: String,
+        withGenres: String,
+        voteAverageGte: Double,
+        voteAverageLte: Double,
+        runtimeGte: Int,
+        runtimeLte: Int
+    ): List<FilmItem> =
+        withContext(Dispatchers.IO) {
+            apiDao.discoverMovies(
+                releaseDateGte = releaseDateGte,
+                releaseDateLte = releaseDateLte,
+                withGenres = withGenres,
+                voteAverageGte = voteAverageGte,
+                voteAverageLte = voteAverageLte,
+                runtimeGte = runtimeGte,
+                runtimeLte = runtimeLte
+            )
+                .filmItems
+        }
+
+
+
+
 
 
 

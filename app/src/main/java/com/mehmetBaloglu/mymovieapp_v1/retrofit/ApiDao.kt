@@ -163,11 +163,12 @@ interface ApiDao {
         @Query("primary_release_date.gte") releaseDateGte: String,  // 2020-01-01 ***
         @Query("primary_release_date.lte") releaseDateLte: String,  //2024-12-31 ***
         @Query("with_genres") withGenres: String, //28,35 ***
-        @Query("with_original_language") withOriginalLanguage: String, //en ***
+        //@Query("with_original_language") withOriginalLanguage: String, //en ***
         @Query("vote_average.gte") voteAverageGte: Double, //7.0 ***
+        @Query("vote_average.gte") voteAverageLte: Double,
         @Query("with_runtime.gte") runtimeGte: Int, //90 ***
         @Query("with_runtime.lte") runtimeLte: Int, //200 ***
-        @Query("with_keywords") withKeywords: String
+        //@Query("with_keywords") withKeywords: String
     ): GeneralResponse
 
 

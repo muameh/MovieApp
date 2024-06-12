@@ -34,6 +34,8 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     var detailedMovie = MutableLiveData<DetailFilmResponse>()
     var detailedSerie = MutableLiveData<DetailSerieResponse>()
 
+    var discoveredMovies = MutableLiveData<List<FilmItem>>()
+
     init {
         getpopularMovies()
         getMoviesInTheaters()
@@ -128,6 +130,28 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     fun getSerieDetails(id : Int) = viewModelScope.launch (Dispatchers.IO) {
         try {
             detailedSerie.postValue(movieRepo.getSerieDetails(id))
+        } catch (e: Exception){
+            _error.postValue("Failed Code: ${e.message}")
+        }
+    }
+
+    fun discoverMovies(
+        releaseDateGte: String,
+        releaseDateLte: String,
+        withGenres: String,
+        voteAverageGte: Double,
+        voteAverageLte: Double,
+        runtimeGte: Int,
+        runtimeLte: Int
+    ) = viewModelScope.launch  (Dispatchers.IO) {
+        try {
+            discoveredMovies.postValue(movieRepo.discoverMovies(releaseDateGte,
+                releaseDateLte,
+                withGenres,
+                voteAverageGte,
+                voteAverageLte,
+                runtimeGte,
+                runtimeLte))
         } catch (e: Exception){
             _error.postValue("Failed Code: ${e.message}")
         }
