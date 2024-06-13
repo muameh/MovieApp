@@ -1,5 +1,6 @@
 package com.mehmetBaloglu.mymovieapp_v1.data.repository
 
+import com.google.firebase.firestore.CollectionReference
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse

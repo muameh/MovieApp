@@ -78,6 +78,7 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
                             .addOnSuccessListener {
                                 // Başarıyla silindiğinde yapılacak işlemler
                                 println("Document successfully deleted!")
+                                viewModel.createUserWatchList()
                             }
                             .addOnFailureListener { e ->
                                 // Hata durumunda yapılacak işlemler
@@ -87,10 +88,7 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
                         println("No documents found with the given ID")
                     }
                 }
-                .addOnFailureListener { e ->
-                    // Hata durumunda yapılacak işlemler
-                    println("Error getting documents: $e")
-                }
+
         }
 
 

@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.CardDesingForUserBinding
+import com.mehmetBaloglu.mymovieapp_v1.ui.fragments.UserFragment
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 
 class WatchEDListAdapter(var mContext: Context, var viewModel: MoviesViewModel) :
@@ -43,6 +44,8 @@ class WatchEDListAdapter(var mContext: Context, var viewModel: MoviesViewModel) 
         }
     }
     val differ = AsyncListDiffer(this, differCallback)
+
+    lateinit var userFragment : UserFragment
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter1ViewHolder {
@@ -82,6 +85,8 @@ class WatchEDListAdapter(var mContext: Context, var viewModel: MoviesViewModel) 
                             .addOnSuccessListener {
                                 // Başarıyla silindiğinde yapılacak işlemler
                                 println("Document successfully deleted!")
+                                viewModel.createUsersWatchEDList()
+
                             }
                             .addOnFailureListener { e ->
                                 // Hata durumunda yapılacak işlemler
@@ -90,10 +95,6 @@ class WatchEDListAdapter(var mContext: Context, var viewModel: MoviesViewModel) 
                     } else {
                         println("No documents found with the given ID")
                     }
-                }
-                .addOnFailureListener { e ->
-                    // Hata durumunda yapılacak işlemler
-                    println("Error getting documents: $e")
                 }
         }
 

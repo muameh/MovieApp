@@ -23,6 +23,7 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import com.mehmetBaloglu.mymovieapp_v1.R
+import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentDetailBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
 import com.mehmetBaloglu.mymovieapp_v1.utils.Constants
@@ -205,6 +206,9 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                 .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watched List",Toast.LENGTH_SHORT).show() }
                 .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
 
+            //todo buraya filmleri dizileri class yapısında kaydetmeyi deneyeceğiz
+            //db.collection("WatchedList").document().set()
+            
         } else if (item?.itemId == R.id.IDtowatch) {
 
             val _hashMap = hashMapOf<Any,Any>()

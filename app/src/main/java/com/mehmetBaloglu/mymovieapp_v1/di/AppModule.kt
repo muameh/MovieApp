@@ -1,6 +1,9 @@
 package com.mehmetBaloglu.mymovieapp_v1.di
 
 
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.repository.MovieRepo
 import com.mehmetBaloglu.mymovieapp_v1.retrofit.ApiDao
 import com.mehmetBaloglu.mymovieapp_v1.retrofit.ApiUtils
@@ -23,21 +26,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideRepository(apiDao: ApiDao) : MovieRepo {
+    fun provideRepository(apiDao: ApiDao): MovieRepo {
         return MovieRepo(apiDao)
     }
 
+
+
+
+
 }
 
-/*
- @Provides
-    @Singleton
-    fun provideArticleDao(@ApplicationContext context: Context): ArticleDao {
-        val db = databaseBuilder(
-            context.applicationContext,
-            ArticleDataBase::class.java,
-            "article.db")
-            .build()
-        return db.ArticleDao()
-    }
- */
