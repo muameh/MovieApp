@@ -184,6 +184,7 @@ class ExploreFragment : Fragment() {
             } else {
                 selectedGenresSet.add(selectedGenre)
                 binding.tvSelectedGenres.text = selectedGenresSet.joinToString(", ")
+                checkClearAllButtonVisibility(selectedGenresSet)
             }
         }
 
@@ -204,13 +205,9 @@ class ExploreFragment : Fragment() {
             var genres_list = binding.tvSelectedGenres.text.toString()
             var genres_id_list = createGenresIDs(genres_list)
 
-            var keyWord : String? = null
-            if (binding.editTextKeyWord.text.isNotEmpty()){
-                keyWord = binding.editTextKeyWord.text.toString()
-            }
 
             Log.d("xxxParams1",min_year+ " " + max_year+ " " + min_rate+ " " + max_rate+ " " + min_runtime+ " " + max_runtime+ " ")
-            Log.d("xxxParams2", min_uservote.toString()+ " "+genres_id_list+ " "+keyWord)
+            Log.d("xxxParams2", min_uservote.toString()+ " "+genres_id_list+ " ")
 
             moviesViewModel.discoverMovies(
                 releaseDateGte = min_year,
@@ -218,10 +215,10 @@ class ExploreFragment : Fragment() {
                 runtimeLte = max_runtime,
                 runtimeGte = min_runtime,
                 withGenres = genres_id_list,
-                keyWord = keyWord,
                 voteCount = min_uservote,
                 voteAverageLte = max_rate,
-                voteAverageGte = min_rate
+                voteAverageGte = min_rate,
+                keyWord = null
             )
 
             adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
@@ -238,20 +235,11 @@ class ExploreFragment : Fragment() {
 
         }
 
-/*
- moviesViewModel.discoverMovies(
-            "2000-01-01",
-            "2010-01-01",
-            "28, 12",
-            6.0,
-            9.0,
-            60,
-            200,
-            300,
-            null
-        )
- */
-
+        binding.buttonClearAll.setOnClickListener {
+            binding.tvSelectedGenres.text = ""
+            selectedGenresSet.clear()
+            checkClearAllButtonVisibility(selectedGenresSet)
+        }
 
 
 
@@ -261,6 +249,15 @@ class ExploreFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun checkClearAllButtonVisibility(selectedGenresSet: HashSet<String>) {
+        if (selectedGenresSet.isEmpty()) {
+            binding.buttonClearAll.visibility = View.GONE
+        } else {
+            binding.buttonClearAll.visibility = View.VISIBLE
+        }
+    }
+
 
     private fun createGenresIDs(genresText: String): String {
         val immutableMap = mapOf(

@@ -1,6 +1,7 @@
 package com.mehmetBaloglu.mymovieapp_v1.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -86,7 +87,7 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         super.onDestroyView()
         _binding = null
     }
-
+//----------------------------------------------------------------------------------------
 
     fun getMoviesDetais(){
         var __id = bundle.id.toString().drop(1)
@@ -130,12 +131,18 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
         moviesViewModel.getSerieDetails(_id)
 
+        Log.e("serieID",_id.toString())
+
         moviesViewModel.detailedSerie.observe(viewLifecycleOwner){
             binding.textViewMainTitle.text = it.name
+            binding.textViewYearAndGenres.text = it.originalName
             binding.textViewScore.text = it.voteAverage.toString().substring(0,3)
             binding.textViewLanguage.text = it.originalLanguage!!.uppercase() //todo
             binding.textViewStatus.text = it.status
-            //binding.textViewRevenue.text = formatString(it.revenue.toString())
+            binding.textViewOrgtitleTexti.text = "Number of Seasons"
+            binding.textViewOrginalTitle.text = it.numberOfSeasons.toString()
+            binding.textViewRevenueTexti.text = "Last Air Date"
+            binding.textViewRevenue.text = it.lastAirDate
             binding.textViewSlogan.text = it.tagline
             binding.textViewOverView.text = it.overview
 

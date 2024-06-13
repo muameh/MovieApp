@@ -295,7 +295,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextKeyWord" />
+            app:layout_constraintTop_toBottomOf="@+id/pickerGenres" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewDiscoverMovies"
@@ -312,45 +312,21 @@
             app:layout_constraintTop_toBottomOf="@+id/button_search"
             tools:visibility="visible" />
 
-        <EditText
-            android:id="@+id/editTextKeyWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:ems="10"
-            android:hint="optional..."
-            android:inputType="text"
-            android:textColor="@color/red"
-            android:textColorHint="@color/red"
-            app:layout_constraintBottom_toBottomOf="@+id/textView13"
-            app:layout_constraintStart_toEndOf="@+id/textView13"
-            app:layout_constraintTop_toTopOf="@+id/textView13"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="140dp"
-            android:text="Keyword"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="@+id/textView22"
-            app:layout_constraintStart_toStartOf="@+id/textView22"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
         <Button
             android:id="@+id/buttonClearAll"
-            android:background="@color/cardview_shadow_end_color"
             android:layout_width="72dp"
             android:layout_height="43dp"
+            android:background="@color/cardview_shadow_end_color"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:paddingRight="0dp"
             android:paddingBottom="0dp"
             android:text="clear all"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/tvSelectedGenres"
             app:layout_constraintStart_toStartOf="@+id/tvSelectedGenres"
-            app:layout_constraintTop_toBottomOf="@+id/tvSelectedGenres" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSelectedGenres"
+            tools:visibility="visible" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
