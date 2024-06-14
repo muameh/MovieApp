@@ -20,8 +20,10 @@ import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.R
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentDetailBinding
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentExploreBinding
+import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterForSeries
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterSearchMovies
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
+import com.mehmetBaloglu.mymovieapp_v1.utils.GeneralFunctions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +54,7 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    //------------------------------------------------------------
+    //------------------NumberPickers------------------------------------------
         binding.pickerReleaseDateMin.minValue = 1874
         binding.pickerReleaseDateMin.maxValue = 2024
         var showInitially_1 = 1990
@@ -203,11 +205,7 @@ class ExploreFragment : Fragment() {
             var min_uservote = binding.tvMinUser.text.toString().toInt()
 
             var genres_list = binding.tvSelectedGenres.text.toString()
-            var genres_id_list = createGenresIDs(genres_list)
-
-
-            Log.d("xxxParams1",min_year+ " " + max_year+ " " + min_rate+ " " + max_rate+ " " + min_runtime+ " " + max_runtime+ " ")
-            Log.d("xxxParams2", min_uservote.toString()+ " "+genres_id_list+ " ")
+            var genres_id_list = GeneralFunctions.createGenresIDs(genres_list)
 
             moviesViewModel.discoverMovies(
                 releaseDateGte = min_year,
@@ -221,17 +219,7 @@ class ExploreFragment : Fragment() {
                 keyWord = null
             )
 
-            adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
-            //binding.recyclerViewDiscoverMovies.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.recyclerViewDiscoverMovies.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-            binding.recyclerViewDiscoverMovies.adapter = adapterSearchMovies
-
-            moviesViewModel.discoveredMoviesList.observe(viewLifecycleOwner){
-                adapterSearchMovies.differ.submitList(it)
-                if (it.isNotEmpty()){
-                    binding.recyclerViewDiscoverMovies.visibility = View.VISIBLE
-                }
-            }
+            createDiscoveredItemsRecyclerView()
 
         }
 
@@ -240,8 +228,6 @@ class ExploreFragment : Fragment() {
             selectedGenresSet.clear()
             checkClearAllButtonVisibility(selectedGenresSet)
         }
-
-
 
     }
 
@@ -258,35 +244,20 @@ class ExploreFragment : Fragment() {
         }
     }
 
-
-    private fun createGenresIDs(genresText: String): String {
-        val immutableMap = mapOf(
-            "Action" to 28,
-            "Adventure" to 12,
-            "Animation" to 16,
-            "Comedy" to 35,
-            "Crime" to 80,
-            "Documentary" to 99,
-            "Drama" to 18,
-            "Family" to 10751,
-            "Fantasy" to 14,
-            "History" to 36,
-            "Horror" to 27,
-            "Music" to 10402,
-            "Mystery" to 9648,
-            "Romance" to 10749,
-            "Science Fiction" to 878,
-            "TV Movie" to 10770,
-            "Thriller" to 53,
-            "War" to 10752,
-            "Western" to 37
-        )
-
-        val genresList = genresText.split(",").map { it.trim() }
-        val idsList = genresList.mapNotNull { genre -> immutableMap[genre] }
-
-        return idsList.joinToString(", ")
+    private fun createDiscoveredItemsRecyclerView() {
+        adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
+        binding.recyclerViewDiscoverMovies.apply {
+            layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+            adapter = adapterSearchMovies
+        }
+        activity?.let {
+            moviesViewModel.discoveredMoviesList.observe(viewLifecycleOwner) {
+                adapterSearchMovies.differ.submitList(it)
+                if (it.isNotEmpty()){
+                    binding.recyclerViewDiscoverMovies.visibility = View.VISIBLE
+                }
+            }
+        }
     }
-
-
 }
+

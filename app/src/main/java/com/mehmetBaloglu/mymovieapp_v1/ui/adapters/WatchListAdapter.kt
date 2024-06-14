@@ -66,7 +66,7 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
 
 
         holder.itemBinding.imageViewDelete.setOnClickListener {
-            viewModel.deleteFromWatchList(currentFilm.filmID.toString())
+            viewModel.deleteFromWatchList(mContext,currentFilm.filmID.toString())
         }
 
 

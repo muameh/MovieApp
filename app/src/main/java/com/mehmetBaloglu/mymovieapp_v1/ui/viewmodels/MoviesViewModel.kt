@@ -1,5 +1,6 @@
 package com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
@@ -53,13 +54,13 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         //createUsersWatchList()
         //createUsersWatchEDList()
     }
-    fun deleteFromWatchEDList(filmID: String){
-        movieRepo.deleteFromWatchEDList(filmID)
+    fun deleteFromWatchEDList(context: Context,filmID: String){
+        movieRepo.deleteFromWatchEDList(context, filmID)
         Log.e("delete",filmID)
     }
 
-    fun deleteFromWatchList(filmID: String){
-        movieRepo.deleteFromWatchList(filmID)
+    fun deleteFromWatchList(context: Context,filmID: String){
+        movieRepo.deleteFromWatchList(context,filmID)
         Log.e("delete",filmID)
     }
 

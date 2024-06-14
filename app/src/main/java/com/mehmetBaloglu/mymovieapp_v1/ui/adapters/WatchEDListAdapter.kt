@@ -68,34 +68,11 @@ class WatchEDListAdapter(var mContext: Context, var viewModel: MoviesViewModel) 
         }
 
         holder.itemBinding.imageViewDelete.setOnClickListener {
-            viewModel.deleteFromWatchEDList(currentFilm.filmID!!)
+            viewModel.deleteFromWatchEDList(mContext,currentFilm.filmID!!)
         }
 
     }
 }
 
-/*
-val firestore = Firebase.firestore
 
-            firestore.collection("WatchedList")
-                .whereEqualTo("ID", currentFilm.filmID)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (!querySnapshot.isEmpty) {
-                        val document = querySnapshot.documents[0]
-                        firestore.collection("WatchedList").document(document.id).delete()
-                            .addOnSuccessListener {
-                                // Başarıyla silindiğinde yapılacak işlemler
-                                println("Document successfully deleted!")
-
-                            }
-                            .addOnFailureListener { e ->
-                                // Hata durumunda yapılacak işlemler
-                                println("Error deleting document: $e")
-                            }
-                    } else {
-                        println("No documents found with the given ID")
-                    }
-                }
- */
 

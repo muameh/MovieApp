@@ -1,6 +1,8 @@
 package com.mehmetBaloglu.mymovieapp_v1.data.repository
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -140,7 +142,7 @@ class MovieRepo(var apiDao: ApiDao) {
     }
 
     //-----------------------------------------------------------------
-    fun deleteFromWatchEDList(filmID: String) {
+    fun deleteFromWatchEDList(context: Context,filmID: String) {
 
         db.collection("WatchedList")
             .whereEqualTo("filmID", filmID)
@@ -156,6 +158,7 @@ class MovieRepo(var apiDao: ApiDao) {
                         .addOnSuccessListener {
                             // Başarıyla silindiğinde yapılacak işlemler
                             println("Document successfully deleted!")
+                            Toast.makeText(context,"deleted from WatchedList",Toast.LENGTH_SHORT).show()
 
                         }
                         .addOnFailureListener { e ->
@@ -167,8 +170,9 @@ class MovieRepo(var apiDao: ApiDao) {
                 }
             }
     }
+    //-------------------------
 
-    fun deleteFromWatchList(filmID: String) {
+    fun deleteFromWatchList(context: Context,filmID: String) {
 
         db.collection("WatchList")
             .whereEqualTo("filmID", filmID)
@@ -183,6 +187,7 @@ class MovieRepo(var apiDao: ApiDao) {
                     db.collection("WatchList").document(document.id).delete()
                         .addOnSuccessListener {
                             println("Document successfully deleted!")
+                            Toast.makeText(context,"deleted from WatchList",Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { e ->
                             println("Error deleting document: $e")
