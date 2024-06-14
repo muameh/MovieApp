@@ -195,36 +195,29 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.IDwatched){
 
-            val _hashMap = hashMapOf<Any,Any>()
-            _hashMap.put("email",auth.currentUser!!.email.toString())
-            _hashMap.put("ID",bundle.id.toString())
-            _hashMap.put("filmPosterUrl",filmPosterURL.toString())
-            _hashMap.put("filmName",filmName.toString())
-            _hashMap.put("date",Timestamp.now())
-
-            var newItem = ForFirebaseResponse(date = Timestamp.now(), filmID = bundle.id.toString(), filmPosterUrl = filmPosterURL.toString(), filmName = filmName.toString(), email = auth.currentUser?.email.toString())
+            var newItem = ForFirebaseResponse(
+                date = Timestamp.now(),
+                filmID = bundle.id.toString(),
+                filmPosterUrl = filmPosterURL.toString(),
+                filmName = filmName.toString(),
+                email = auth.currentUser?.email.toString()
+            )
 
             db.collection("WatchedList").document().set(newItem)
                 .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watched List",Toast.LENGTH_SHORT).show() }
                 .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
-            /*
-             db.collection("WatchedList").add(_hashMap)
-                .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watched List",Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
-             */
 
-
-            
         } else if (item?.itemId == R.id.IDtowatch) {
 
-            val _hashMap = hashMapOf<Any,Any>()
-            _hashMap.put("email",auth.currentUser!!.email.toString())
-            _hashMap.put("ID",bundle.id.toString())
-            _hashMap.put("date",Timestamp.now())
-            _hashMap.put("filmPosterUrl",filmPosterURL.toString())
-            _hashMap.put("filmName",filmName.toString())
+            var newItem = ForFirebaseResponse(
+                date = Timestamp.now(),
+                filmID = bundle.id.toString(),
+                filmPosterUrl = filmPosterURL.toString(),
+                filmName = filmName.toString(),
+                email = auth.currentUser?.email.toString()
+            )
 
-            db.collection("WatchList").add(_hashMap)
+            db.collection("WatchList").document().set(newItem)
                 .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watch List",Toast.LENGTH_SHORT).show() }
                 .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
         }

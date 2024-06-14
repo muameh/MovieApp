@@ -5,11 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.ktx.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
@@ -18,7 +15,6 @@ import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
 import com.mehmetBaloglu.mymovieapp_v1.retrofit.ApiDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.http.Query
 
 class MovieRepo(var apiDao: ApiDao) {
 
@@ -98,7 +94,7 @@ class MovieRepo(var apiDao: ApiDao) {
     fun createUserWatchList(): MutableLiveData<List<ForFirebaseResponse>> {
 
         var usersEmailAdress = auth.currentUser?.email.toString()
-        Firebase.firestore.collection("WatchList")
+        db.collection("WatchList")
             .whereEqualTo("email", usersEmailAdress)
             .addSnapshotListener { value, error ->
                 if (value != null) {
@@ -123,7 +119,7 @@ class MovieRepo(var apiDao: ApiDao) {
     fun createUserWatchEDList(): MutableLiveData<List<ForFirebaseResponse>> {
         var usersEmailAdress = auth.currentUser?.email.toString()
 
-        Firebase.firestore.collection("WatchedList")
+        db.collection("WatchedList")
             .whereEqualTo("email", usersEmailAdress)
             .addSnapshotListener { value, error ->
                 if (value != null) {
@@ -144,6 +140,61 @@ class MovieRepo(var apiDao: ApiDao) {
     }
 
     //-----------------------------------------------------------------
+    fun deleteFromWatchEDList(filmID: String) {
+
+        db.collection("WatchedList")
+            .whereEqualTo("filmID", filmID)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+
+                    Log.e("queryx",querySnapshot.toString())
+
+                    val document = querySnapshot.documents[0]
+
+                    db.collection("WatchedList").document(document.id).delete()
+                        .addOnSuccessListener {
+                            // Başarıyla silindiğinde yapılacak işlemler
+                            println("Document successfully deleted!")
+
+                        }
+                        .addOnFailureListener { e ->
+                            // Hata durumunda yapılacak işlemler
+                            println("Error deleting document: $e")
+                        }
+                } else {
+                    println("No documents found with the given ID")
+                }
+            }
+    }
+
+    fun deleteFromWatchList(filmID: String) {
+
+        db.collection("WatchList")
+            .whereEqualTo("filmID", filmID)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+
+                    Log.e("queryx",querySnapshot.toString())
+
+                    val document = querySnapshot.documents[0]
+
+                    db.collection("WatchList").document(document.id).delete()
+                        .addOnSuccessListener {
+                            println("Document successfully deleted!")
+                        }
+                        .addOnFailureListener { e ->
+                            println("Error deleting document: $e")
+                        }
+                } else {
+                    println("No documents found with the given ID")
+                }
+            }
+    }
+
+
+
 
 
 

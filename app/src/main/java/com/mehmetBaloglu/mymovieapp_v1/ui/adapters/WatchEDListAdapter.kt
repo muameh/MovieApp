@@ -1,19 +1,14 @@
 package com.mehmetBaloglu.mymovieapp_v1.ui.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.CardDesingForUserBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.fragments.UserFragment
@@ -73,7 +68,14 @@ class WatchEDListAdapter(var mContext: Context, var viewModel: MoviesViewModel) 
         }
 
         holder.itemBinding.imageViewDelete.setOnClickListener {
-            val firestore = Firebase.firestore
+            viewModel.deleteFromWatchEDList(currentFilm.filmID!!)
+        }
+
+    }
+}
+
+/*
+val firestore = Firebase.firestore
 
             firestore.collection("WatchedList")
                 .whereEqualTo("ID", currentFilm.filmID)
@@ -95,8 +97,5 @@ class WatchEDListAdapter(var mContext: Context, var viewModel: MoviesViewModel) 
                         println("No documents found with the given ID")
                     }
                 }
-        }
-
-    }
-}
+ */
 

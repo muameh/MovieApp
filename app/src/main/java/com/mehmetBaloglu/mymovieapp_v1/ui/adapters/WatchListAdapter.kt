@@ -66,28 +66,7 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
 
 
         holder.itemBinding.imageViewDelete.setOnClickListener {
-            val firestore = Firebase.firestore
-
-            firestore.collection("WatchList")
-                .whereEqualTo("ID", currentFilm.filmID)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (!querySnapshot.isEmpty) {
-                        val document = querySnapshot.documents[0]
-                        firestore.collection("WatchList").document(document.id).delete()
-                            .addOnSuccessListener {
-                                // Başarıyla silindiğinde yapılacak işlemler
-                                println("Document successfully deleted!")
-                            }
-                            .addOnFailureListener { e ->
-                                // Hata durumunda yapılacak işlemler
-                                println("Error deleting document: $e")
-                            }
-                    } else {
-                        println("No documents found with the given ID")
-                    }
-                }
-
+            viewModel.deleteFromWatchList(currentFilm.filmID.toString())
         }
 
 

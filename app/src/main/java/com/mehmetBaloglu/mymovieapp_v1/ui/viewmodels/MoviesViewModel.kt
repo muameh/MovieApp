@@ -1,16 +1,11 @@
 package com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
@@ -57,6 +52,15 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
 
         //createUsersWatchList()
         //createUsersWatchEDList()
+    }
+    fun deleteFromWatchEDList(filmID: String){
+        movieRepo.deleteFromWatchEDList(filmID)
+        Log.e("delete",filmID)
+    }
+
+    fun deleteFromWatchList(filmID: String){
+        movieRepo.deleteFromWatchList(filmID)
+        Log.e("delete",filmID)
     }
 
     fun createUsersWatchList(){
