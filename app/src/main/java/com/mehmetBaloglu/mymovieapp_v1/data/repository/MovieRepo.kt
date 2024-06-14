@@ -1,6 +1,16 @@
 package com.mehmetBaloglu.mymovieapp_v1.data.repository
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
+import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
@@ -11,6 +21,14 @@ import kotlinx.coroutines.withContext
 import retrofit2.http.Query
 
 class MovieRepo(var apiDao: ApiDao) {
+
+    private var auth: FirebaseAuth
+    private var db :FirebaseFirestore
+
+    init {
+        auth = Firebase.auth
+        db = Firebase.firestore
+    }
 
     //--------------------- MOVIES -------------------------------------//
     suspend fun getPopularMovies() : List<FilmItem> =
@@ -73,6 +91,63 @@ class MovieRepo(var apiDao: ApiDao) {
             )
                 .filmItems
         }
+
+    //--------------------------------Firebase-------------------------------//
+
+    var UserWatchList = MutableLiveData<List<ForFirebaseResponse>>()
+    fun createUserWatchList(): MutableLiveData<List<ForFirebaseResponse>> {
+
+        var usersEmailAdress = auth.currentUser?.email.toString()
+        Firebase.firestore.collection("WatchList")
+            .whereEqualTo("email", usersEmailAdress)
+            .addSnapshotListener { value, error ->
+                if (value != null) {
+                    val _tempWatchList = ArrayList<ForFirebaseResponse>()
+
+                    val documents = value.documents
+
+                    for (document in documents) {
+                        val _item = document.toObject(ForFirebaseResponse::class.java)
+                        if (_item != null) {
+                            _tempWatchList.add(_item)
+                        }
+                    }
+                    UserWatchList.value = _tempWatchList
+                }
+            }
+        return UserWatchList
+    }
+
+    //-------------------------
+    var UserWatchEDList = MutableLiveData<List<ForFirebaseResponse>>()
+    fun createUserWatchEDList(): MutableLiveData<List<ForFirebaseResponse>> {
+        var usersEmailAdress = auth.currentUser?.email.toString()
+
+        Firebase.firestore.collection("WatchedList")
+            .whereEqualTo("email", usersEmailAdress)
+            .addSnapshotListener { value, error ->
+                if (value != null) {
+                    val _tempWatchedList = ArrayList<ForFirebaseResponse>()
+
+                    val documents = value.documents
+
+                    for (document in documents) {
+                        val _item = document.toObject(ForFirebaseResponse::class.java)
+                        if (_item != null) {
+                            _tempWatchedList.add(_item)
+                        }
+                    }
+                    UserWatchEDList.value = _tempWatchedList
+                }
+            }
+        return UserWatchEDList
+    }
+
+    //-----------------------------------------------------------------
+
+
+
+
 
 
 

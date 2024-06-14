@@ -55,67 +55,19 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         getPopularTVSeries()
         getTopRatedTVSeries()
 
-        createUserWatchList()
-        createUsersWatchEDList()
+        //createUsersWatchList()
+        //createUsersWatchEDList()
     }
 
-    fun createUserWatchList(){
-        val currentUsersEmail = Firebase.auth.currentUser?.email.toString()
-
-        Log.e("email", currentUsersEmail)
-
-        Firebase.firestore.collection("WatchList")
-            .whereEqualTo("email", currentUsersEmail)
-            .orderBy("date", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { result ->
-            if (!result.isEmpty){
-                val documents = result.documents
-
-                var _x : MutableList<ForFirebaseResponse> = mutableListOf()
-
-                for (document in documents){
-                    val ID = document.get("ID") as String
-                    val name : String = document.get("filmName") as String
-                    var posterUrl : String = document.get("filmPosterUrl") as String
-                    var _item = ForFirebaseResponse(ID, name, posterUrl)
-
-                    _x.add(_item)
-                }
-                UserWatchList.postValue(_x)
-            }
-        }
+    fun createUsersWatchList(){
+        UserWatchList = movieRepo.createUserWatchList()
+        Log.e("watchListInViewModel",UserWatchList.toString())
     }
 
     fun createUsersWatchEDList() {
-        val currentUsersEmail = Firebase.auth.currentUser?.email.toString()
+        UserWatchEDList = movieRepo.createUserWatchEDList()
 
-        Log.e("email", currentUsersEmail)
-
-        Firebase.firestore.collection("WatchedList")
-            .whereEqualTo("email", currentUsersEmail)
-            .orderBy("date", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { result ->
-                if (!result.isEmpty) {
-                    val documents = result.documents
-
-                    var _y: MutableList<ForFirebaseResponse> = mutableListOf()
-
-                    for (document in documents) {
-                        val ID = document.get("ID") as String
-                        val name: String = document.get("filmName") as String
-                        var posterUrl: String = document.get("filmPosterUrl") as String
-                        var _item = ForFirebaseResponse(ID, name, posterUrl)
-
-                        _y.add(_item)
-                    }
-                    UserWatchEDList.postValue(_y)
-                }
-            }
     }
-
-
 
     fun searchMovies(query : String) {
         viewModelScope.launch (Dispatchers.IO) {

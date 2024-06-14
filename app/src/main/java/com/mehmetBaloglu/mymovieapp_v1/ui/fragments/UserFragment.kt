@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
+import com.mehmetBaloglu.mymovieapp_v1.R
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentUserBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterSearchMovies
@@ -51,11 +53,7 @@ class UserFragment : Fragment() {
         db = Firebase.firestore
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentUserBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -66,8 +64,10 @@ class UserFragment : Fragment() {
 
         binding.textViewUserMail.text = auth.currentUser?.email
 
-        //moviesViewModel.createUserWatchList()
-        //moviesViewModel.createUsersWatchEDList()
+        binding.buttonSignOut.setOnClickListener { signOut(it) }
+
+        moviesViewModel.createUsersWatchList()
+        moviesViewModel.createUsersWatchEDList()
 
         createWatchListRecyclerView()
         createWatchEDListRecyclerView()
@@ -88,6 +88,7 @@ class UserFragment : Fragment() {
         }
         moviesViewModel.UserWatchList.observe(viewLifecycleOwner) {
             watchListAdapter.differ.submitList(it)
+            Log.e("watchListInUserFragment",it.toString())
         }
     }
 
@@ -102,6 +103,12 @@ class UserFragment : Fragment() {
         moviesViewModel.UserWatchEDList.observe(viewLifecycleOwner) {
             watchEDListAdapter.differ.submitList(it)
         }
+    }
+
+    fun signOut(view: View) {
+        auth.signOut() //signout
+        Navigation.findNavController(view).navigate(R.id.action_userFragment_to_loginFragment)
+        Toast.makeText(requireContext(), "You have successfully logged out.", Toast.LENGTH_SHORT).show()
     }
 
 }

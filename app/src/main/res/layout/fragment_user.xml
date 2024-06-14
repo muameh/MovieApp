@@ -74,6 +74,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <Button
+            android:id="@+id/buttonSignOut"
+            android:layout_width="111dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="112dp"
+            android:background="@drawable/backgroun_for_add"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="0dp"
+            android:text="Sign Out"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewUserMail"
+            app:layout_constraintStart_toEndOf="@+id/textViewUserMail"
+            app:layout_constraintTop_toTopOf="@+id/textViewUserMail"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

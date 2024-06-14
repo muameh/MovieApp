@@ -78,7 +78,6 @@ class WatchListAdapter (var mContext: Context, var viewModel: MoviesViewModel)
                             .addOnSuccessListener {
                                 // Başarıyla silindiğinde yapılacak işlemler
                                 println("Document successfully deleted!")
-                                viewModel.createUserWatchList()
                             }
                             .addOnFailureListener { e ->
                                 // Hata durumunda yapılacak işlemler

@@ -202,12 +202,18 @@ class DetailFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             _hashMap.put("filmName",filmName.toString())
             _hashMap.put("date",Timestamp.now())
 
-            db.collection("WatchedList").add(_hashMap)
+            var newItem = ForFirebaseResponse(date = Timestamp.now(), filmID = bundle.id.toString(), filmPosterUrl = filmPosterURL.toString(), filmName = filmName.toString(), email = auth.currentUser?.email.toString())
+
+            db.collection("WatchedList").document().set(newItem)
                 .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watched List",Toast.LENGTH_SHORT).show() }
                 .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
+            /*
+             db.collection("WatchedList").add(_hashMap)
+                .addOnSuccessListener { Toast.makeText(requireContext(),"Added to Watched List",Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show() }
+             */
 
-            //todo buraya filmleri dizileri class yapısında kaydetmeyi deneyeceğiz
-            //db.collection("WatchedList").document().set()
+
             
         } else if (item?.itemId == R.id.IDtowatch) {
 
