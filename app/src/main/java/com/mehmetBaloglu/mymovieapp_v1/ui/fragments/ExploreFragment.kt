@@ -244,7 +244,7 @@ class ExploreFragment : Fragment() {
         }
     }
 
-    private fun createDiscoveredItemsRecyclerView() {
+    private fun createDiscoveredItemsRecyclerView() {   //todo adapter i AdapterSearchMovies'den alınca Nav'da hata ! düzelt
         adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
         binding.recyclerViewDiscoverMovies.apply {
             layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)

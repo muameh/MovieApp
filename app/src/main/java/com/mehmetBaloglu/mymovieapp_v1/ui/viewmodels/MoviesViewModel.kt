@@ -51,22 +51,17 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         getPopularTVSeries()
         getTopRatedTVSeries()
 
-        //createUsersWatchList()
-        //createUsersWatchEDList()
     }
     fun deleteFromWatchEDList(context: Context,filmID: String){
         movieRepo.deleteFromWatchEDList(context, filmID)
-        Log.e("delete",filmID)
     }
 
     fun deleteFromWatchList(context: Context,filmID: String){
         movieRepo.deleteFromWatchList(context,filmID)
-        Log.e("delete",filmID)
     }
 
     fun createUsersWatchList(){
         UserWatchList = movieRepo.createUserWatchList()
-        Log.e("watchListInViewModel",UserWatchList.toString())
     }
 
     fun createUsersWatchEDList() {

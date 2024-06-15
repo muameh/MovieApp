@@ -156,21 +156,15 @@ class MovieRepo(var apiDao: ApiDao) {
 
                     db.collection("WatchedList").document(document.id).delete()
                         .addOnSuccessListener {
-                            // Başarıyla silindiğinde yapılacak işlemler
                             println("Document successfully deleted!")
                             Toast.makeText(context,"deleted from WatchedList",Toast.LENGTH_SHORT).show()
-
-                        }
-                        .addOnFailureListener { e ->
-                            // Hata durumunda yapılacak işlemler
-                            println("Error deleting document: $e")
-                        }
+                        }.addOnFailureListener { e -> println("Error deleting document: $e") }
                 } else {
                     println("No documents found with the given ID")
                 }
             }
     }
-    //-------------------------
+    //-----------------------------------------------------------
 
     fun deleteFromWatchList(context: Context,filmID: String) {
 
@@ -179,9 +173,6 @@ class MovieRepo(var apiDao: ApiDao) {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
-
-                    Log.e("queryx",querySnapshot.toString())
-
                     val document = querySnapshot.documents[0]
 
                     db.collection("WatchList").document(document.id).delete()
