@@ -149,9 +149,6 @@ class MovieRepo(var apiDao: ApiDao) {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
-
-                    Log.e("queryx",querySnapshot.toString())
-
                     val document = querySnapshot.documents[0]
 
                     db.collection("WatchedList").document(document.id).delete()

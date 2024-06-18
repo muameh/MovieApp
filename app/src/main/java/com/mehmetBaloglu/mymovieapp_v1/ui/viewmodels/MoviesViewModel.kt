@@ -52,7 +52,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         getTopRatedTVSeries()
 
     }
-    fun deleteFromWatchEDList(context: Context,filmID: String){
+    fun deleteFromWatchEDList(context: Context,filmID: String){ //context i kullanmammın tek nedeni movie repoda Toast fonk kullanmak içindi 
         movieRepo.deleteFromWatchEDList(context, filmID)
     }
 

@@ -207,17 +207,23 @@ class ExploreFragment : Fragment() {
             var genres_list = binding.tvSelectedGenres.text.toString()
             var genres_id_list = GeneralFunctions.createGenresIDs(genres_list)
 
-            moviesViewModel.discoverMovies(
-                releaseDateGte = min_year,
-                releaseDateLte = max_year,
-                runtimeLte = max_runtime,
-                runtimeGte = min_runtime,
-                withGenres = genres_id_list,
-                voteCount = min_uservote,
-                voteAverageLte = max_rate,
-                voteAverageGte = min_rate,
-                keyWord = null
-            )
+
+            if (min_year <= max_year && min_rate <= max_rate && min_runtime <= max_runtime ){
+                moviesViewModel.discoverMovies(
+                    releaseDateGte = min_year,
+                    releaseDateLte = max_year,
+                    runtimeLte = max_runtime,
+                    runtimeGte = min_runtime,
+                    withGenres = genres_id_list,
+                    voteCount = min_uservote,
+                    voteAverageLte = max_rate,
+                    voteAverageGte = min_rate,
+                    keyWord = null
+                )
+            }else{
+              Toast.makeText(requireContext(),"Please select minimum values that are lower than maximum values.",Toast.LENGTH_SHORT).show()
+            }
+
 
             createDiscoveredItemsRecyclerView()
 
