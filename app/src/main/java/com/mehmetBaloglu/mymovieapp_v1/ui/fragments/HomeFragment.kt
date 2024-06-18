@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
-import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentHomeBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterForSeries
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterPopularMovies
@@ -42,17 +43,28 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupPopularNewsRecyclerView()
+        getPopularMoviesRecyclerVİew()
         getTopRatedMovies()
         getPopularSeries()
+
+        errorMessage()
 
 
         binding.tabLayoutFilms.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> getTopRatedMovies()
-                    1 -> getMoviesInTheaters()
-                    2 -> getUpcomingMovies()
+                    0 -> {
+                        getTopRatedMovies()
+                        errorMessage()
+                    }
+                    1 -> {
+                        getMoviesInTheaters()
+                        errorMessage()
+                    }
+                    2 -> {
+                        getUpcomingMovies()
+                        errorMessage()
+                    }
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -62,8 +74,14 @@ class HomeFragment : Fragment() {
         binding.tabLayoutSeries.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> getPopularSeries()
-                    1 -> getTopRatedSeries()
+                    0 -> {
+                        getPopularSeries()
+                        errorMessage()
+                    }
+                    1 -> {
+                        getTopRatedSeries()
+                        errorMessage()
+                    }
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -76,6 +94,13 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+//-----------------------------------------------------------
+    private fun errorMessage(){
+        moviesViewModel.error.observe(viewLifecycleOwner){errorMessage ->
+            errorMessage?.let { Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show() }
+        }
     }
 
     private fun getTopRatedSeries() {
@@ -143,11 +168,25 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupPopularNewsRecyclerView(){
+    private fun getPopularMoviesRecyclerVİew(){
         popularNewsAdapter = AdapterPopularMovies(requireContext(),moviesViewModel)
         binding.recyclerViewPopular.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
             adapter = popularNewsAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                    if (lastVisibleItemPosition >= totalItemCount - 1) {
+                        moviesViewModel.loadNextPageForPopularMovies()
+                    }
+                }
+            })
         }
         activity?.let {
             moviesViewModel.popularMoviesList.observe(viewLifecycleOwner){

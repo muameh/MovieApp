@@ -135,22 +135,6 @@ interface ApiDao {
         @Query("page") page: Int = 1
     ): GeneralResponse
 
-    //https://api.themoviedb.org/3/
-    // discover/movie?
-    // api_key=03fcf2929cdbc24d14c2167c3a7dadfd&
-    // language=en-US&
-    // sort_by=popularity.desc&
-    // include_adult=false&
-    // include_video=false&
-    // page=1&
-    // primary_release_date.gte=2020-01-01&
-    // primary_release_date.lte=2024-12-31&
-    // with_genres=28,35&
-    // with_original_language=en&
-    // vote_average.gte=7.0&
-    // with_runtime.gte=90&
-    // with_runtime.lte=200&
-    // with_keywords=
     @GET("discover/movie")
     suspend fun discoverMovies(
         @Header("accept") accept: String = "application/json",

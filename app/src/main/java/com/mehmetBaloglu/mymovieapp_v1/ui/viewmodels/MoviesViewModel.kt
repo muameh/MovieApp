@@ -24,9 +24,12 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     val error: LiveData<String?> get() = _error
 
     var topRatedMoviesList = MutableLiveData<List<FilmItem>>()
-    var popularMoviesList = MutableLiveData<List<FilmItem>>()
+    //var popularMoviesList = MutableLiveData<List<FilmItem>>()
     var moviesInTheatersList = MutableLiveData<List<FilmItem>>()
     var upcomingMoviesList = MutableLiveData<List<FilmItem>>()
+
+    private val _popularMoviesList = MutableLiveData<List<FilmItem>>()
+    val popularMoviesList: LiveData<List<FilmItem>> get() = _popularMoviesList
 
     var popularTVSeriesList = MutableLiveData<List<SeriesItem>>()
     var topRatedTVSeriesList = MutableLiveData<List<SeriesItem>>()
@@ -52,7 +55,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         getTopRatedTVSeries()
 
     }
-    fun deleteFromWatchEDList(context: Context,filmID: String){ //context i kullanmammın tek nedeni movie repoda Toast fonk kullanmak içindi 
+    fun deleteFromWatchEDList(context: Context,filmID: String){ //context i kullanmammın tek nedeni movie repoda Toast fonk kullanmak içindi
         movieRepo.deleteFromWatchEDList(context, filmID)
     }
 
@@ -89,15 +92,21 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         }
     }
 
-
-    fun getpopularMovies() {
+    private var currentPageForPopularMovies = 1
+    fun getpopularMovies(page: Int = currentPageForPopularMovies) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                popularMoviesList.postValue(movieRepo.getPopularMovies())
+                val response = movieRepo.getPopularMovies(page)
+                val currentList = _popularMoviesList.value ?: emptyList()
+                _popularMoviesList.postValue(currentList + response.filmItems)
             } catch (e: Exception){
                 _error.postValue("Failed Code: ${e.message}")
             }
         }
+    }
+    fun loadNextPageForPopularMovies() {
+        currentPageForPopularMovies++
+        getpopularMovies(currentPageForPopularMovies)
     }
 
     fun getTopRatedMovies() {

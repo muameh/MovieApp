@@ -12,6 +12,7 @@ import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
+import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.GeneralResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
 import com.mehmetBaloglu.mymovieapp_v1.retrofit.ApiDao
@@ -29,8 +30,8 @@ class MovieRepo(var apiDao: ApiDao) {
     }
 
     //--------------------- MOVIES -------------------------------------//
-    suspend fun getPopularMovies() : List<FilmItem> =
-        withContext(Dispatchers.IO) { apiDao.getPopularMovies().filmItems }
+    suspend fun getPopularMovies(page: Int) : GeneralResponse =
+        withContext(Dispatchers.IO) { apiDao.getPopularMovies(page = page) }
 
     suspend fun getMoviesInTheaters() : List<FilmItem> =  //vizyondakiler
         withContext(Dispatchers.IO) { apiDao.getMoviesInTheaters().filmItems }

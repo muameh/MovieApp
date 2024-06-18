@@ -20,6 +20,7 @@ import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.R
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentDetailBinding
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentExploreBinding
+import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterForDiscover
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterForSeries
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterSearchMovies
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel
@@ -33,7 +34,7 @@ class ExploreFragment : Fragment() {
 
     private lateinit var moviesViewModel: MoviesViewModel
 
-    private lateinit var adapterSearchMovies: AdapterSearchMovies
+    private lateinit var adapterForDiscover: AdapterForDiscover
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -251,14 +252,14 @@ class ExploreFragment : Fragment() {
     }
 
     private fun createDiscoveredItemsRecyclerView() {   //todo adapter i AdapterSearchMovies'den alınca Nav'da hata ! düzelt
-        adapterSearchMovies = AdapterSearchMovies(requireContext(),moviesViewModel)
+        adapterForDiscover = AdapterForDiscover(requireContext(),moviesViewModel)
         binding.recyclerViewDiscoverMovies.apply {
             layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-            adapter = adapterSearchMovies
+            adapter = adapterForDiscover
         }
         activity?.let {
             moviesViewModel.discoveredMoviesList.observe(viewLifecycleOwner) {
-                adapterSearchMovies.differ.submitList(it)
+                adapterForDiscover.differ.submitList(it)
                 if (it.isNotEmpty()){
                     binding.recyclerViewDiscoverMovies.visibility = View.VISIBLE
                 }
