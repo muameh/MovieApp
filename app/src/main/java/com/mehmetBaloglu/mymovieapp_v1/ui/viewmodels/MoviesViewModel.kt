@@ -31,6 +31,8 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     private val _popularMoviesList = MutableLiveData<List<FilmItem>>()
     val popularMoviesList: LiveData<List<FilmItem>> get() = _popularMoviesList
 
+    private var currentPageForPopularMovies : Int = 1
+
     var popularTVSeriesList = MutableLiveData<List<SeriesItem>>()
     var topRatedTVSeriesList = MutableLiveData<List<SeriesItem>>()
 
@@ -53,6 +55,8 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
 
         getPopularTVSeries()
         getTopRatedTVSeries()
+
+        Log.e("xxx",popularMoviesList.toString())
 
     }
     fun deleteFromWatchEDList(context: Context,filmID: String){ //context i kullanmammın tek nedeni movie repoda Toast fonk kullanmak içindi
@@ -92,7 +96,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         }
     }
 
-    private var currentPageForPopularMovies = 1
+
     fun getpopularMovies(page: Int = currentPageForPopularMovies) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -194,6 +198,8 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
             Log.e("xxx2",e.toString())
         }
     }
+
+
 
 
 

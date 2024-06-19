@@ -1,6 +1,7 @@
 package com.mehmetBaloglu.mymovieapp_v1.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -182,7 +183,8 @@ class HomeFragment : Fragment() {
                     val totalItemCount = layoutManager.itemCount
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
 
-                    if (lastVisibleItemPosition >= totalItemCount - 1) {
+                    val threshold = 5
+                    if (lastVisibleItemPosition >= totalItemCount - threshold) {
                         moviesViewModel.loadNextPageForPopularMovies()
                     }
                 }
@@ -192,6 +194,7 @@ class HomeFragment : Fragment() {
             moviesViewModel.popularMoviesList.observe(viewLifecycleOwner){
                 popularNewsAdapter.differ.submitList(it)
                 //updateUI(it)
+                Log.d("errorHandling",it.toString())
             }
         }
     }
