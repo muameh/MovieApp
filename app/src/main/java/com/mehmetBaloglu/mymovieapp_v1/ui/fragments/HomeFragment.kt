@@ -109,6 +109,21 @@ class HomeFragment : Fragment() {
         binding.recyclerViewForSeries.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterForSeries
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                    val threshold = 5
+                    if (lastVisibleItemPosition >= totalItemCount - threshold) {
+                        moviesViewModel.loadNextPageForTopRatedTVSeries()
+                    }
+                }
+            })
         }
         activity?.let {
             moviesViewModel.topRatedTVSeriesList.observe(viewLifecycleOwner) {
@@ -122,6 +137,21 @@ class HomeFragment : Fragment() {
         binding.recyclerViewForSeries.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterForSeries
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                    val threshold = 5
+                    if (lastVisibleItemPosition >= totalItemCount - threshold) {
+                        moviesViewModel.loadNextPageForPopularTVSeries()
+                    }
+                }
+            })
         }
         activity?.let {
             moviesViewModel.popularTVSeriesList.observe(viewLifecycleOwner) {

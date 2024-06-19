@@ -15,6 +15,7 @@ import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.GeneralResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem
+import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesResponse
 import com.mehmetBaloglu.mymovieapp_v1.retrofit.ApiDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -43,11 +44,11 @@ class MovieRepo(var apiDao: ApiDao) {
         withContext(Dispatchers.IO) { apiDao.getTopRatedMovies(page= page)}
 
     //--------------------- TV SERIES -------------------------------------//
-    suspend fun getTopRatedTVSeries() : List<SeriesItem> =
-        withContext(Dispatchers.IO) { apiDao.getTopRatedSeries().seriesItems}
+    suspend fun getTopRatedTVSeries(page: Int) : SeriesResponse =
+        withContext(Dispatchers.IO) { apiDao.getTopRatedSeries(page= page)}
 
-    suspend fun getPopularTVSeries(): List<SeriesItem> =
-        withContext(Dispatchers.IO) { apiDao.getPopularTVSeries().seriesItems }
+    suspend fun getPopularTVSeries(page: Int): SeriesResponse =
+        withContext(Dispatchers.IO) { apiDao.getPopularTVSeries(page= page)}
 
     //--------------------- SEARCH -------------------------------------//
     suspend fun searchMovie(query: String) : List<FilmItem> =

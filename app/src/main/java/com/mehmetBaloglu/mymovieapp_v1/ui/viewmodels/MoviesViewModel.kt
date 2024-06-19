@@ -22,20 +22,22 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
-
+    //-----------------------------------------------
     private val _topRatedMoviesList = MutableLiveData<List<FilmItem>>()
     val topRatedMoviesList : LiveData<List<FilmItem>> get() = _topRatedMoviesList
-
-
+    //-----------------------------------------------
     var moviesInTheatersList = MutableLiveData<List<FilmItem>>()
     var upcomingMoviesList = MutableLiveData<List<FilmItem>>()
-
+    //-----------------------------------------------
     private val _popularMoviesList = MutableLiveData<List<FilmItem>>()
     val popularMoviesList: LiveData<List<FilmItem>> get() = _popularMoviesList
-
-    var popularTVSeriesList = MutableLiveData<List<SeriesItem>>()
-    var topRatedTVSeriesList = MutableLiveData<List<SeriesItem>>()
-
+    //-----------------------------------------------
+    private val _popularTVSeriesList = MutableLiveData<List<SeriesItem>>()
+    val popularTVSeriesList :LiveData<List<SeriesItem>> get() = _popularTVSeriesList
+    //-----------------------------------------------
+    private val _topRatedTVSeriesList = MutableLiveData<List<SeriesItem>>()
+    val topRatedTVSeriesList : LiveData<List<SeriesItem>> get() = _topRatedTVSeriesList
+    //-----------------------------------------------
     var searchListForMovies = MutableLiveData<List<FilmItem>>()
     var searchListForSeries = MutableLiveData<List<SeriesItem>>()
 
@@ -49,6 +51,8 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
 
     private var currentPageForPopularMovies : Int = 1
     private var currentPageForTopRatedMovies : Int = 1
+    private var currentPageForPopularSeries : Int = 1
+    private var currentPageForTopRatedSeries : Int = 1
 
     init {
         getpopularMovies()
@@ -97,7 +101,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         }
     }
 
-
+    //-------------------------------------------------------------------------------
     fun getpopularMovies(page: Int = currentPageForPopularMovies) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -113,7 +117,7 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         currentPageForPopularMovies++
         getpopularMovies(currentPageForPopularMovies)
     }
-
+    //-------------------------------------------------------------------------------
     fun getTopRatedMovies(page: Int = currentPageForTopRatedMovies) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -129,23 +133,35 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         currentPageForTopRatedMovies++
         getTopRatedMovies(currentPageForTopRatedMovies)
     }
-
-    fun getPopularTVSeries()  = viewModelScope.launch (Dispatchers.IO) {
+    //-------------------------------------------------------------------------------
+    fun getPopularTVSeries(page: Int = currentPageForPopularSeries)  = viewModelScope.launch (Dispatchers.IO) {
         try {
-            popularTVSeriesList.postValue(movieRepo.getPopularTVSeries())
+            val response = movieRepo.getPopularTVSeries(page)
+            val currentList = _popularTVSeriesList.value ?: emptyList()
+            _popularTVSeriesList.postValue(currentList + response.seriesItems)
         } catch (e: Exception){
             _error.postValue("Failed Code: ${e.message}")
         }
     }
-
-    fun getTopRatedTVSeries() = viewModelScope.launch (Dispatchers.IO) {
+    fun loadNextPageForPopularTVSeries() {
+        currentPageForPopularSeries++
+        getPopularTVSeries(currentPageForPopularSeries)
+    }
+    //-------------------------------------------------------------------------------
+    fun getTopRatedTVSeries(page: Int = currentPageForTopRatedSeries) = viewModelScope.launch (Dispatchers.IO) {
         try {
-            topRatedTVSeriesList.postValue(movieRepo.getTopRatedTVSeries())
+            val response = movieRepo.getTopRatedTVSeries(page)
+            val currentList = _topRatedTVSeriesList.value ?: emptyList()
+            _topRatedTVSeriesList.postValue(currentList + response.seriesItems)
         } catch (e: Exception){
             _error.postValue("Failed Code: ${e.message}")
         }
     }
-
+    fun loadNextPageForTopRatedTVSeries() {
+        currentPageForTopRatedSeries++
+        getPopularTVSeries(currentPageForTopRatedSeries)
+    }
+    //-------------------------------------------------------------------------------
     fun getMoviesInTheaters() = viewModelScope.launch(Dispatchers.IO) {
         try {
             moviesInTheatersList.postValue(movieRepo.getMoviesInTheaters())
