@@ -130,19 +130,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getTopRatedMovies() {
-        adapterTabLayout = AdapterTabLayout(requireContext(), moviesViewModel)
-        binding.recylerViewTabLayout.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = adapterTabLayout
-        }
-        activity?.let {
-            moviesViewModel.topRatedMoviesList.observe(viewLifecycleOwner) {
-                adapterTabLayout.differ.submitList(it)
-            }
-        }
-    }
-
     private fun getMoviesInTheaters() {
         adapterTabLayout = AdapterTabLayout(requireContext(), moviesViewModel)
         binding.recylerViewTabLayout.apply {
@@ -193,8 +180,36 @@ class HomeFragment : Fragment() {
         activity?.let {
             moviesViewModel.popularMoviesList.observe(viewLifecycleOwner){
                 popularNewsAdapter.differ.submitList(it)
-                //updateUI(it)
-                Log.d("errorHandling",it.toString())
+            }
+        }
+    }
+
+    private fun getTopRatedMovies() {
+        adapterTabLayout = AdapterTabLayout(requireContext(), moviesViewModel)
+        binding.recylerViewTabLayout.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapterTabLayout
+
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                    val threshold = 5
+                    if (lastVisibleItemPosition >= totalItemCount - threshold) {
+                        moviesViewModel.loadNextPageForTopRatedMovies()
+                    }
+                }
+            })
+        }
+
+        activity?.let {
+            moviesViewModel.topRatedMoviesList.observe(viewLifecycleOwner) {
+                adapterTabLayout.differ.submitList(it)
             }
         }
     }

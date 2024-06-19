@@ -23,15 +23,15 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
 
-    var topRatedMoviesList = MutableLiveData<List<FilmItem>>()
-    //var popularMoviesList = MutableLiveData<List<FilmItem>>()
+    private val _topRatedMoviesList = MutableLiveData<List<FilmItem>>()
+    val topRatedMoviesList : LiveData<List<FilmItem>> get() = _topRatedMoviesList
+
+
     var moviesInTheatersList = MutableLiveData<List<FilmItem>>()
     var upcomingMoviesList = MutableLiveData<List<FilmItem>>()
 
     private val _popularMoviesList = MutableLiveData<List<FilmItem>>()
     val popularMoviesList: LiveData<List<FilmItem>> get() = _popularMoviesList
-
-    private var currentPageForPopularMovies : Int = 1
 
     var popularTVSeriesList = MutableLiveData<List<SeriesItem>>()
     var topRatedTVSeriesList = MutableLiveData<List<SeriesItem>>()
@@ -47,6 +47,9 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
     var UserWatchList = MutableLiveData<List<ForFirebaseResponse>>()
     var UserWatchEDList = MutableLiveData<List<ForFirebaseResponse>>()
 
+    private var currentPageForPopularMovies : Int = 1
+    private var currentPageForTopRatedMovies : Int = 1
+
     init {
         getpopularMovies()
         getMoviesInTheaters()
@@ -55,8 +58,6 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
 
         getPopularTVSeries()
         getTopRatedTVSeries()
-
-        Log.e("xxx",popularMoviesList.toString())
 
     }
     fun deleteFromWatchEDList(context: Context,filmID: String){ //context i kullanmammın tek nedeni movie repoda Toast fonk kullanmak içindi
@@ -113,14 +114,20 @@ class MoviesViewModel @Inject constructor(private val movieRepo: MovieRepo): Vie
         getpopularMovies(currentPageForPopularMovies)
     }
 
-    fun getTopRatedMovies() {
+    fun getTopRatedMovies(page: Int = currentPageForTopRatedMovies) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                topRatedMoviesList.postValue(movieRepo.getTopRatedMovies())
+                val response = movieRepo.getTopRatedMovies(page)
+                val currentList = _topRatedMoviesList.value ?: emptyList()
+                _topRatedMoviesList.postValue(currentList + response.filmItems)
             } catch (e: Exception){
                 _error.postValue("Failed Code: ${e.message}")
             }
         }
+    }
+    fun loadNextPageForTopRatedMovies() {
+        currentPageForTopRatedMovies++
+        getTopRatedMovies(currentPageForTopRatedMovies)
     }
 
     fun getPopularTVSeries()  = viewModelScope.launch (Dispatchers.IO) {

@@ -39,8 +39,8 @@ class MovieRepo(var apiDao: ApiDao) {
     suspend fun getUpcomingMovies() : List<FilmItem> =
         withContext(Dispatchers.IO) { apiDao.getUpcomingMovies().filmItems}
 
-    suspend fun getTopRatedMovies() : List<FilmItem> =
-        withContext(Dispatchers.IO) { apiDao.getTopRatedMovies().filmItems}
+    suspend fun getTopRatedMovies(page: Int) : GeneralResponse =
+        withContext(Dispatchers.IO) { apiDao.getTopRatedMovies(page= page)}
 
     //--------------------- TV SERIES -------------------------------------//
     suspend fun getTopRatedTVSeries() : List<SeriesItem> =
