@@ -135,6 +135,8 @@ interface ApiDao {
         @Query("page") page: Int = 1
     ): GeneralResponse
 
+
+    //explore fragmentta çalışıyor
     @GET("discover/movie")
     suspend fun discoverMovies(
         @Header("accept") accept: String = "application/json",
