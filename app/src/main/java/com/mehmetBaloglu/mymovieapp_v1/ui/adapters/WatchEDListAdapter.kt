@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.firebase_response.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.CardDesingForUserBinding
 import com.mehmetBaloglu.mymovieapp_v1.ui.fragments.UserFragment
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel

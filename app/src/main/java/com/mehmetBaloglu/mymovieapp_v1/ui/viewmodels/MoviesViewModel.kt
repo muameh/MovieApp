@@ -7,7 +7,7 @@ import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.firebase_response.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.detail.DetailFilmResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.series.SeriesItem

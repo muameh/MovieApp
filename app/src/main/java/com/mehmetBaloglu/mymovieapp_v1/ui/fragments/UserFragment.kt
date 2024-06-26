@@ -13,14 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.mehmetBaloglu.mymovieapp_v1.R
-import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.firebase_response.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.databinding.FragmentUserBinding
-import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.AdapterSearchMovies
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.WatchEDListAdapter
 import com.mehmetBaloglu.mymovieapp_v1.ui.adapters.WatchListAdapter
 import com.mehmetBaloglu.mymovieapp_v1.ui.viewmodels.MoviesViewModel

@@ -1,4 +1,4 @@
-package com.mehmetBaloglu.mymovieapp_v1.data.models
+package com.mehmetBaloglu.mymovieapp_v1.data.models.firebase_response
 
 import com.google.firebase.Timestamp
 

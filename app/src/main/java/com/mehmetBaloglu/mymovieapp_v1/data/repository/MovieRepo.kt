@@ -1,7 +1,6 @@
 package com.mehmetBaloglu.mymovieapp_v1.data.repository
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
@@ -9,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-import com.mehmetBaloglu.mymovieapp_v1.data.models.ForFirebaseResponse
+import com.mehmetBaloglu.mymovieapp_v1.data.models.firebase_response.ForFirebaseResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.detailseries.DetailSerieResponse
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.FilmItem
 import com.mehmetBaloglu.mymovieapp_v1.data.models.general_returns.GeneralResponse
