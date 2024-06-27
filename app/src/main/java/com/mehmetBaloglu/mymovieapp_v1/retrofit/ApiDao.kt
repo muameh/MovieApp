@@ -104,7 +104,7 @@ interface ApiDao {
         @Header("accept") accept: String = "application/json",
         @Header("Authorization") auth: String = Constants.BEARER_TOKEN,
         @Query("language") language: String = "en-US",
-        @Query("adult") adult : String = "true"
+        @Query("adult") adult: String = "true"
     ): DetailSerieResponse
 
     // Mevcut film türlerini listeler
@@ -114,7 +114,7 @@ interface ApiDao {
         @Header("Authorization") auth: String = Constants.BEARER_TOKEN,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
-        @Query("adult") adult : String = "true"
+        @Query("adult") adult: String = "true"
     ): GenresResponse
 
     // Mevcut dizi türlerini listeler
@@ -155,12 +155,8 @@ interface ApiDao {
         @Query("with_runtime.gte") runtimeGte: Int, //90 ***
         @Query("with_runtime.lte") runtimeLte: Int, //200 ***
         @Query("with_keywords") withKeywords: String? = null, // Optional parameter
-        @Query("vote_count.gte") voteCountGte : Int = 0
+        @Query("vote_count.gte") voteCountGte: Int = 0
     ): GeneralResponse
-
-
-
-
 
 
 }
