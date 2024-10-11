@@ -39,6 +39,10 @@ To get a local copy up and running, follow these steps.
 ![Screenshot_1728644336](https://github.com/user-attachments/assets/fab5c6bd-a919-477d-8e9e-0ee3b2380465)
 ![Screenshot_1728644351](https://github.com/user-attachments/assets/8f51b211-2a74-479c-ad5b-178641c7d785)
 ![Screenshot_1728644365](https://github.com/user-attachments/assets/b1ea979b-b468-48c6-aca9-8402f285743f)
+![Screenshot_1728644377](https://github.com/user-attachments/assets/a003b012-44ff-474f-9731-f095fe253d10)
+![Screenshot_1728644382](https://github.com/user-attachments/assets/331bb5ac-fd70-4e29-b85c-97acfc35108d)
+
+
 
 
 
